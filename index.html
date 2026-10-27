@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#38bdf8"><meta name="description" content="Manage MTK Mobile Solution income, expenses, stock, repairs and customer balances in one private workspace."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MTK Business"><link rel="manifest" href="./manifest.webmanifest?v=sky-blue-1"><link rel="icon" type="image/jpeg" href="./mtk-logo.jpeg"><title>MTK Private Business Manager</title>
+<meta name="theme-color" content="#38bdf8"><meta name="description" content="Manage MTK Mobile Solution income, expenses, stock, repairs and customer balances in one private workspace."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MTK Business"><link rel="manifest" href="./manifest.webmanifest?v=encrypted-1"><link rel="apple-touch-icon" href="./mtk-icon-192.png"><link rel="icon" type="image/jpeg" href="./mtk-logo.jpeg"><title>MTK Private Business Manager</title>
 <style>
 :root{color-scheme:light;--sky:#38bdf8;--sky-dark:#0284c7;--sky-soft:#e0f2fe;--dark:#eff8ff;--panel:#fff;--panel-raised:#f7fbff;--line:#cfe6f5;--muted:#506b7e;--text:#17364b;--success:#16835d;--danger:#c5394b}
 *{box-sizing:border-box}
@@ -68,12 +68,12 @@ input[type=file]{padding:7px}
 <div><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="At least 8 characters"></div>
 <div id="confirmWrap" style="margin-top:10px"><label>Confirm password</label><input id="confirmPassword" type="password" autocomplete="new-password"></div>
 <div class="actions"><button class="btn" id="loginBtn">Create password</button></div><p class="hint" id="loginMsg"></p>
-<div class="warning">Privacy note: this first version stores records on this device in the browser. The app password is a local lock, not bank-level encryption. Anyone who can access browser storage or the device may be able to access data. Use a strong phone lock and export secure backups.</div>
+<div class="warning">Your password encrypts saved records on this device. This does not protect data while the app is unlocked or a phone is compromised. Forgotten passwords cannot recover encrypted records. JSON backups are not encrypted, so protect your phone and backup files.</div>
 </section>
 <div id="app" class="hidden">
 <main>
 <div class="actions no-print"><button class="btn alt" id="lockBtn">Lock app</button><button class="btn alt" id="exportBtn">Export backup</button><label class="btn alt" style="display:inline-flex;align-items:center;cursor:pointer">Import backup<input id="importFile" type="file" accept=".json,application/json" hidden></label><button class="btn alt" onclick="window.print()">Print current page</button></div>
-<div class="warning">Keep receipts and records private. Do not record bank PINs, passwords, or customers' phone unlock codes. Export a backup regularly and store it somewhere secure.</div>
+<div class="warning">Saved records are encrypted on this device. Exported JSON backups are not encrypted. Do not record bank PINs, passwords, or customers' phone unlock codes; store backups somewhere private.</div>
 <section class="card"><h2>Business overview</h2><div class="grid"><div><label>From date</label><input type="date" id="fromDate"></div><div><label>To date</label><input type="date" id="toDate"></div><div style="align-self:end"><button class="btn" id="filterBtn">Update totals</button></div></div><div class="stats" style="margin-top:12px">
 <div class="stat"><span>Sales / money received</span><strong id="totalIncome">R0.00</strong></div>
 <div class="stat"><span>Expenses / money spent</span><strong id="totalExpense">R0.00</strong></div>
@@ -130,41 +130,166 @@ input[type=file]{padding:7px}
 <div><label>Due date</label><input id="dbDue" type="date"></div>
 </div><label style="margin-top:10px">Notes</label><textarea id="dbNotes"></textarea><div class="actions"><button class="btn" type="submit">Save balance</button></div></form>
 <h3>Outstanding balances</h3><div id="debtList"></div></section>
-<section class="card panel hidden" id="panel-reports"><h2>Reports & backup</h2><p>Export a JSON backup to keep your transactions, stock list, and receipt photos together. Store the backup securely.</p><div class="actions"><button class="btn" id="exportBtn2">Export full backup</button><label class="btn alt" style="display:inline-flex;align-items:center;cursor:pointer">Import backup<input id="importFile2" type="file" accept=".json,application/json" hidden></label></div><h3>Selected period totals</h3><div id="reportSummary"></div><h3>Business record checklist</h3><ul class="hint"><li>Keep supplier slips for accessories and repair parts.</li><li>Record sales and repair payments on the date received.</li><li>Keep personal spending separate from business spending.</li><li>Count stock regularly and correct quantities.</li><li>Back up data after entering new transactions.</li></ul></section>
+<section class="card panel hidden" id="panel-reports"><h2>Reports & backup</h2><p>Export a JSON backup to keep your transactions, stock list, and receipt photos together. Backup files are not encrypted; store them securely.</p><div class="actions"><button class="btn" id="exportBtn2">Export full backup</button><label class="btn alt" style="display:inline-flex;align-items:center;cursor:pointer">Import backup<input id="importFile2" type="file" accept=".json,application/json" hidden></label></div><h3>Selected period totals</h3><div id="reportSummary"></div><h3>Business record checklist</h3><ul class="hint"><li>Keep supplier slips for accessories and repair parts.</li><li>Record sales and repair payments on the date received.</li><li>Keep personal spending separate from business spending.</li><li>Count stock regularly and correct quantities.</li><li>Back up data after entering new transactions.</li></ul></section>
 <div class="slogan">WE FIX, YOU SMILE</div>
 </main></div>
 <script>
 const $=id=>document.getElementById(id);
 const today=()=>new Date().toISOString().slice(0,10);
 $('txDate').value=today();$('stDate').value=today();$('fromDate').value=new Date(new Date().getFullYear(),new Date().getMonth(),1).toISOString().slice(0,10);$('toDate').value=today();
-const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
-const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
-async function hash(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-function passwordExists(){return !!localStorage.getItem('mtkPassHash')}
+const ENCRYPTED_DATA_KEY='mtkSecureBusinessData';
+const LEGACY_KEYS=['mtkPassHash','mtkTransactions','mtkStock','mtkRepairJobs','mtkDebts'];
+const KDF_ITERATIONS=310000;
+const encoder=new TextEncoder();
+const decoder=new TextDecoder();
+const VERIFIER_CONTEXT=encoder.encode('mtk-business-password-verifier-v1');
+const DATA_CONTEXT=encoder.encode('mtk-business-data-v1');
+let businessData=null;
+let encryptionKey=null;
+let activeCredential=null;
+let saveQueue=Promise.resolve();
+let saveRevision=0;
+let latestSaveFailed=false;
+const read=(k,d)=>businessData?.[k]??d;
+async function hash(s){const b=await crypto.subtle.digest('SHA-256',encoder.encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function bytesToBase64(bytes){let binary='';for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(binary)}
+function base64ToBytes(value){const binary=atob(value),bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);return bytes}
+async function derivePasswordKeys(password,salt){
+ const source=await crypto.subtle.importKey('raw',encoder.encode(password),'PBKDF2',false,['deriveBits']);
+ const raw=new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt,iterations:KDF_ITERATIONS,hash:'SHA-256'},source,512));
+ try{
+  const encryption=await crypto.subtle.importKey('raw',raw.slice(0,32),{name:'AES-GCM'},false,['encrypt','decrypt']);
+  const verifier=await crypto.subtle.importKey('raw',raw.slice(32),{name:'HMAC',hash:'SHA-256'},false,['sign']);
+  return{encryption,verifier};
+ }finally{raw.fill(0)}
+}
+async function passwordVerifier(key){return new Uint8Array(await crypto.subtle.sign('HMAC',key,VERIFIER_CONTEXT))}
+function bytesEqual(left,right){if(left.length!==right.length)return false;let difference=0;for(let i=0;i<left.length;i++)difference|=left[i]^right[i];return difference===0}
+function readLegacyData(){
+ const readArray=key=>{const raw=localStorage.getItem(key);if(raw===null)return[];const value=JSON.parse(raw);if(!Array.isArray(value))throw Error(`Legacy data for ${key} is invalid.`);return value};
+ return{mtkTransactions:readArray('mtkTransactions'),mtkStock:readArray('mtkStock'),mtkRepairJobs:readArray('mtkRepairJobs'),mtkDebts:readArray('mtkDebts')};
+}
+function removeLegacyData(){for(const key of LEGACY_KEYS)localStorage.removeItem(key)}
+function passwordExists(){return !!localStorage.getItem(ENCRYPTED_DATA_KEY)||!!localStorage.getItem('mtkPassHash')}
+function getEncryptedRecord(){
+ const raw=localStorage.getItem(ENCRYPTED_DATA_KEY);
+ if(!raw)return null;
+ const record=JSON.parse(raw);
+ if(record.version!==1||record.algorithm!=='PBKDF2-HMAC-SHA-256'||record.iterations!==KDF_ITERATIONS||typeof record.salt!=='string'||typeof record.verifier!=='string'||typeof record.iv!=='string'||typeof record.ciphertext!=='string')throw Error('The encrypted data record is invalid.');
+ const salt=base64ToBytes(record.salt),iv=base64ToBytes(record.iv),verifier=base64ToBytes(record.verifier);
+ if(salt.length!==16||iv.length!==12||verifier.length!==32)throw Error('The encrypted data record is invalid.');
+ return record;
+}
+async function persistEncryptedData(data,credential,key){
+ const iv=crypto.getRandomValues(new Uint8Array(12));
+ const ciphertext=await crypto.subtle.encrypt({name:'AES-GCM',iv,additionalData:DATA_CONTEXT},key,encoder.encode(JSON.stringify(data)));
+ localStorage.setItem(ENCRYPTED_DATA_KEY,JSON.stringify({...credential,iv:bytesToBase64(iv),ciphertext:bytesToBase64(new Uint8Array(ciphertext))}));
+}
+async function createEncryptedStorage(password,data){
+ const salt=crypto.getRandomValues(new Uint8Array(16));
+ const keys=await derivePasswordKeys(password,salt);
+ const credential={version:1,algorithm:'PBKDF2-HMAC-SHA-256',iterations:KDF_ITERATIONS,salt:bytesToBase64(salt),verifier:bytesToBase64(await passwordVerifier(keys.verifier))};
+ await persistEncryptedData(data,credential,keys.encryption);
+ removeLegacyData();
+ businessData=data;
+ encryptionKey=keys.encryption;
+ activeCredential=credential;
+}
+async function unlockWithPassword(password){
+ const record=getEncryptedRecord();
+ if(!record)return false;
+ const keys=await derivePasswordKeys(password,base64ToBytes(record.salt));
+ if(!bytesEqual(await passwordVerifier(keys.verifier),base64ToBytes(record.verifier)))return false;
+ const plaintext=await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(record.iv),additionalData:DATA_CONTEXT},keys.encryption,base64ToBytes(record.ciphertext));
+ const data=JSON.parse(decoder.decode(plaintext));
+ if(!data||!['mtkTransactions','mtkStock','mtkRepairJobs','mtkDebts'].every(key=>Array.isArray(data[key])))throw Error('The encrypted business records are invalid.');
+ removeLegacyData();
+ businessData=data;
+ encryptionKey=keys.encryption;
+ activeCredential={version:record.version,algorithm:record.algorithm,iterations:record.iterations,salt:record.salt,verifier:record.verifier};
+ return true;
+}
+async function saveData(updates){
+ if(!businessData||!encryptionKey||!activeCredential)throw Error('Unlock the app before saving business records.');
+ const next={...businessData,...updates};
+ businessData=next;
+ const revision=++saveRevision;
+ const pending=saveQueue.then(()=>persistEncryptedData(next,activeCredential,encryptionKey));
+ saveQueue=pending.catch(()=>{});
+ try{
+  await pending;
+  if(revision===saveRevision)latestSaveFailed=false;
+  return true;
+ }catch(error){
+  if(revision===saveRevision)latestSaveFailed=true;
+  console.error('Could not encrypt and save business records.',error);
+  alert('Could not securely save the latest changes. The previous encrypted records are still intact. Keep the app open and try again.');
+  return false;
+ }
+}
 function showLogin(){ $('app').classList.add('hidden');$('login').classList.remove('hidden');$('confirmWrap').classList.toggle('hidden',passwordExists());$('loginTitle').textContent=passwordExists()?'Unlock MTK Private Business Manager':'Create your private password';$('loginBtn').textContent=passwordExists()?'Unlock':'Create password'}
-$('loginBtn').onclick=async()=>{let p=$('password').value;if(p.length<8){$('loginMsg').textContent='Use at least 8 characters.';return}if(passwordExists()){if(await hash(p)===localStorage.getItem('mtkPassHash'))unlock();else $('loginMsg').textContent='Incorrect password. Try again.'}else{if(p!==$('confirmPassword').value){$('loginMsg').textContent='Passwords do not match.';return}localStorage.setItem('mtkPassHash',await hash(p));unlock()}};
-function unlock(){$('login').classList.add('hidden');$('app').classList.remove('hidden');$('password').value='';$('confirmPassword').value='';renderAll()}
-$('lockBtn').onclick=()=>{showLogin();$('loginMsg').textContent='App locked.'};
-if(!passwordExists())showLogin();
+async function handleLogin(){
+ const password=$('password').value;
+ if(password.length<8){$('loginMsg').textContent='Use at least 8 characters.';return}
+ $('loginBtn').disabled=true;
+ try{
+  if(localStorage.getItem(ENCRYPTED_DATA_KEY)){
+   if(!await unlockWithPassword(password)){$('loginMsg').textContent='Incorrect password. Try again.';return}
+  }else{
+   const legacyHash=localStorage.getItem('mtkPassHash');
+   if(legacyHash){
+    if(await hash(password)!==legacyHash){$('loginMsg').textContent='Incorrect password. Try again.';return}
+   }else if(password!==$('confirmPassword').value){$('loginMsg').textContent='Passwords do not match.';return}
+   await createEncryptedStorage(password,readLegacyData());
+  }
+  unlock();
+ }catch(error){
+  console.error('Could not unlock or encrypt business records.',error);
+  $('loginMsg').textContent='Could not unlock or encrypt saved records. Your existing data has not been removed.';
+ }finally{$('loginBtn').disabled=false}
+}
+$('loginBtn').onclick=handleLogin;
+function unlock(){$('login').classList.add('hidden');$('app').classList.remove('hidden');$('password').value='';$('confirmPassword').value='';$('loginMsg').textContent='';renderAll()}
+function clearSensitiveDom(){
+ for(const id of ['transactionForm','stockForm','repairForm','debtForm'])$(id).reset();
+ delete $('txReceipt').dataset.receipt;
+ $('receiptPreview').textContent='';
+ $('ocrText').value='';
+ for(const id of ['historyList','stockList','repairList','debtList','lowStockList','reportSummary'])$(id).textContent='';
+ for(const id of ['totalIncome','totalExpense','net'])$(id).textContent='R0.00';
+ $('stockCount').textContent='0';
+}
+async function lockApp(){
+ await saveQueue;
+ if(latestSaveFailed){alert('The latest changes could not be saved. Keep the app open and try saving again before locking.');return}
+ clearSensitiveDom();
+ businessData=null;
+ encryptionKey=null;
+ activeCredential=null;
+ showLogin();
+ $('loginMsg').textContent='App locked.';
+}
+$('lockBtn').onclick=lockApp;
+showLogin();
 $('txReceipt').addEventListener('change',async()=>{const f=$('txReceipt').files[0];if(!f){$('receiptPreview').innerHTML='';return}try{const data=await compressImage(f);$('receiptPreview').innerHTML=`<img class="receipt" alt="Receipt preview" src="${data}"><p class="hint">Receipt photo ready to save.</p>`;$('txReceipt').dataset.receipt=data}catch(e){$('receiptPreview').textContent='Could not read image. Try another photo.'}});
 function compressImage(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onerror=reject;r.onload=()=>{const im=new Image();im.onerror=reject;im.onload=()=>{let scale=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*scale);c.height=Math.round(im.height*scale);c.getContext('2d').drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.72))};im.src=r.result};r.readAsDataURL(file)})}
-$('transactionForm').onsubmit=e=>{e.preventDefault();const a=Number($('txAmount').value);if(a<=0)return alert('Enter an amount greater than zero.');let tx=read('mtkTransactions',[]);tx.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),type:$('txType').value,date:$('txDate').value,category:$('txCategory').value,amount:a,description:$('txDescription').value,payment:$('txPayment').value,person:$('txPerson').value,qty:Number($('txQty').value||1),notes:$('txNotes').value,receipt:$('txReceipt').dataset.receipt||'',created:new Date().toISOString()});try{write('mtkTransactions',tx)}catch(err){alert('Storage is full. Export a backup and remove some large receipt photos.');return}e.target.reset();$('txDate').value=today();$('txQty').value=1;delete $('txReceipt').dataset.receipt;$('receiptPreview').innerHTML='';renderAll();alert('Transaction saved on this device.')};
-$('stockForm').onsubmit=e=>{e.preventDefault();let s=read('mtkStock',[]);s.push({id:Date.now(),name:$('stName').value,category:$('stCategory').value,qty:Number($('stQty').value),cost:Number($('stCost').value),price:Number($('stPrice').value||0),supplier:$('stSupplier').value,date:$('stDate').value,notes:$('stNotes').value});write('mtkStock',s);e.target.reset();$('stQty').value=1;$('stDate').value=today();renderAll();alert('Stock item saved.')};
+$('transactionForm').onsubmit=async e=>{e.preventDefault();const a=Number($('txAmount').value);if(a<=0)return alert('Enter an amount greater than zero.');let tx=read('mtkTransactions',[]);tx.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),type:$('txType').value,date:$('txDate').value,category:$('txCategory').value,amount:a,description:$('txDescription').value,payment:$('txPayment').value,person:$('txPerson').value,qty:Number($('txQty').value||1),notes:$('txNotes').value,receipt:$('txReceipt').dataset.receipt||'',created:new Date().toISOString()});if(!await saveData({mtkTransactions:tx}))return;e.target.reset();$('txDate').value=today();$('txQty').value=1;delete $('txReceipt').dataset.receipt;$('receiptPreview').innerHTML='';renderAll();alert('Transaction encrypted and saved on this device.')};
+$('stockForm').onsubmit=async e=>{e.preventDefault();let s=read('mtkStock',[]);s.push({id:Date.now(),name:$('stName').value,category:$('stCategory').value,qty:Number($('stQty').value),cost:Number($('stCost').value),price:Number($('stPrice').value||0),supplier:$('stSupplier').value,date:$('stDate').value,notes:$('stNotes').value});if(!await saveData({mtkStock:s}))return;e.target.reset();$('stQty').value=1;$('stDate').value=today();renderAll();alert('Stock item encrypted and saved.')};
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('hidden',x.id!=='panel-'+b.dataset.tab));if(b.dataset.tab==='history')renderHistory();if(b.dataset.tab==='inventory')renderStock();if(b.dataset.tab==='reports')renderReport()});
 function money(n){return 'R'+Number(n||0).toLocaleString('en-ZA',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function selected(){let f=$('fromDate').value,t=$('toDate').value;return read('mtkTransactions',[]).filter(x=>(!f||x.date>=f)&&(!t||x.date<=t))}
 function renderStats(){let tx=selected(),inc=tx.filter(x=>x.type==='income').reduce((s,x)=>s+x.amount,0),exp=tx.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0);$('totalIncome').textContent=money(inc);$('totalExpense').textContent=money(exp);$('net').textContent=money(inc-exp);$('net').className=inc-exp<0?'bad':'';$('stockCount').textContent=read('mtkStock',[]).reduce((s,x)=>s+x.qty,0)}
 function renderStock(){let s=read('mtkStock',[]);$('stockList').innerHTML=s.length?s.map(x=>`<div class="row"><strong>${esc(x.name)}</strong> <span class="pill">${esc(x.category)}</span><div>Qty: ${x.qty} · Cost/item: ${money(x.cost)} · Sell/item: ${money(x.price)} · Stock cost: ${money(x.qty*x.cost)}</div><div class="hint">Supplier: ${esc(x.supplier)} · ${esc(x.date)} · ${esc(x.notes)}</div><div class="actions no-print"><button class="btn alt" onclick="changeQty(${x.id},-1)">−1 sold/used</button><button class="btn alt" onclick="changeQty(${x.id},1)">+1 stock</button><button class="btn red" onclick="deleteStock(${x.id})">Delete</button></div></div>`).join(''):'<p class="hint">No stock items added yet.</p>'}
-window.changeQty=(id,d)=>{let s=read('mtkStock',[]),x=s.find(a=>a.id===id);if(x){x.qty=Math.max(0,x.qty+d);write('mtkStock',s);renderAll()}};window.deleteStock=id=>{if(confirm('Delete this stock item?')){write('mtkStock',read('mtkStock',[]).filter(x=>x.id!==id));renderAll()}};
+window.changeQty=async(id,d)=>{let s=read('mtkStock',[]),x=s.find(a=>a.id===id);if(x){x.qty=Math.max(0,x.qty+d);if(await saveData({mtkStock:s}))renderAll()}};window.deleteStock=async id=>{if(confirm('Delete this stock item?')&&await saveData({mtkStock:read('mtkStock',[]).filter(x=>x.id!==id)}))renderAll()};
 function renderHistory(){let q=$('searchHistory').value.toLowerCase(),typ=$('historyType').value;let tx=selected().filter(x=>(typ==='all'||x.type===typ)&&[x.description,x.category,x.person,x.notes].join(' ').toLowerCase().includes(q)).slice().reverse();$('historyList').innerHTML=tx.length?tx.map(x=>`<div class="row"><strong>${esc(x.date)} · ${esc(x.description)}</strong><div>${x.type==='income'?'Money received':'Money spent'}: <b>${money(x.amount)}</b> · ${esc(x.category)} · ${esc(x.payment)}</div><div class="hint">${esc(x.person)} · Qty ${x.qty} · ${esc(x.notes)}</div>${x.receipt?`<img class="receipt" src="${x.receipt}" alt="Receipt slip">`:''}<div class="actions no-print"><button class="btn red" onclick="deleteTx('${x.id}')">Delete record</button></div></div>`).join(''):'<p class="hint">No matching transactions for this date range.</p>'}
-window.deleteTx=id=>{if(confirm('Delete this transaction and its receipt photo?')){write('mtkTransactions',read('mtkTransactions',[]).filter(x=>x.id!==id));renderAll()}};
+window.deleteTx=async id=>{if(confirm('Delete this transaction and its receipt photo?')&&await saveData({mtkTransactions:read('mtkTransactions',[]).filter(x=>x.id!==id)}))renderAll()};
 function renderReport(){let tx=selected(),inc=tx.filter(x=>x.type==='income').reduce((s,x)=>s+x.amount,0),exp=tx.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0);$('reportSummary').innerHTML=`<div class="stats"><div class="stat"><span>Transactions</span><strong>${tx.length}</strong></div><div class="stat"><span>Income</span><strong>${money(inc)}</strong></div><div class="stat"><span>Expenses</span><strong>${money(exp)}</strong></div><div class="stat"><span>Net cash gain / loss</span><strong>${money(inc-exp)}</strong></div></div>`}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function renderAll(){renderStats();renderStock();renderHistory();renderReport()}
 $('filterBtn').onclick=renderAll;$('searchHistory').oninput=renderHistory;$('historyType').onchange=renderHistory;
 function exportBackup(){let data={app:'MTK Private Business Manager',version:1,exported:new Date().toISOString(),transactions:read('mtkTransactions',[]),stock:read('mtkStock',[]),repairJobs:read('mtkRepairJobs',[]),debts:read('mtkDebts',[])};let b=new Blob([JSON.stringify(data)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='mtk-business-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 $('exportBtn').onclick=exportBackup;$('exportBtn2').onclick=exportBackup;
-async function importBackup(file){try{let d=JSON.parse(await file.text());if(!Array.isArray(d.transactions)||!Array.isArray(d.stock))throw Error('Invalid backup');if(!confirm('Import backup and replace the current transaction and stock lists? Export current data first if you need it.'))return;write('mtkTransactions',d.transactions);write('mtkStock',d.stock);write('mtkRepairJobs',d.repairJobs||[]);write('mtkDebts',d.debts||[]);renderAll();alert('Backup imported.')}catch(e){alert('Could not import this backup file.')}} 
+async function importBackup(file){try{let d=JSON.parse(await file.text());if(!Array.isArray(d.transactions)||!Array.isArray(d.stock)||(d.repairJobs!==undefined&&!Array.isArray(d.repairJobs))||(d.debts!==undefined&&!Array.isArray(d.debts)))throw Error('Invalid backup');if(!confirm('Import this JSON backup and replace the current records? The imported records will be encrypted with your app password. Export current data first if you need it.'))return;if(!await saveData({mtkTransactions:d.transactions,mtkStock:d.stock,mtkRepairJobs:d.repairJobs||[],mtkDebts:d.debts||[]}))return;renderAll();alert('Backup imported and encrypted with your app password.')}catch(e){console.error('Could not import the backup.',e);alert(`Could not import this backup file. ${e?.message||''}`)}}
 $('importFile').onchange=e=>e.target.files[0]&&importBackup(e.target.files[0]);$('importFile2').onchange=e=>e.target.files[0]&&importBackup(e.target.files[0]);
 
 // Extra business-management features: receipt OCR, repair jobs, customer balances, low-stock alerts.
@@ -186,21 +311,21 @@ $('ocrBtn').onclick=async()=>{
 };
 $('copyOcrBtn').onclick=async()=>{try{await navigator.clipboard.writeText($('ocrText').value);alert('Receipt text copied.')}catch(e){$('ocrText').select();document.execCommand('copy');alert('Select and copy the receipt text if copying did not work.')}};
 
-$('repairForm').onsubmit=e=>{
+$('repairForm').onsubmit=async e=>{
  e.preventDefault();let arr=read('mtkRepairJobs',[]);
  const x={id:Date.now(),ticket:$('rpTicket').value,date:$('rpDate').value,customer:$('rpCustomer').value,phone:$('rpPhone').value,device:$('rpDevice').value,serial:$('rpSerial').value,complaint:$('rpComplaint').value,initial:$('rpInitial').value,work:$('rpWork').value,status:$('rpStatus').value,quote:Number($('rpQuote').value||0),warranty:Number($('rpWarranty').value||0),final:$('rpFinal').value};
  const i=arr.findIndex(a=>a.ticket.toLowerCase()===x.ticket.toLowerCase());
  if(i>=0){if(!confirm('Ticket already exists. Update it?'))return; x.id=arr[i].id;arr[i]=x}else arr.push(x);
- write('mtkRepairJobs',arr);renderAll();alert('Repair job saved.');
+ if(!await saveData({mtkRepairJobs:arr}))return;renderAll();alert('Repair job encrypted and saved.');
 };
 function renderRepairs(){const a=read('mtkRepairJobs',[]).slice().reverse();$('repairList').innerHTML=a.length?a.map(x=>`<div class="row"><strong>${esc(x.ticket)} · ${esc(x.customer)}</strong> <span class="pill">${esc(x.status)}</span><div>${esc(x.device)} · Received ${esc(x.date)} · Quote ${money(x.quote)}</div><div class="hint">Phone: ${esc(x.phone)} · Serial: ${esc(x.serial)}<br>Reported: ${esc(x.complaint)}<br>Initial condition: ${esc(x.initial)}<br>Work: ${esc(x.work)}<br>Final test: ${esc(x.final)}<br>Warranty: ${x.warranty} days (if offered)</div><div class="actions no-print"><button class="btn alt" onclick="editRepair(${x.id})">Edit status/details</button><button class="btn red" onclick="deleteRepair(${x.id})">Delete</button></div></div>`).join(''):'<p class="hint">No repair jobs recorded yet.</p>'}
 window.editRepair=id=>{let x=read('mtkRepairJobs',[]).find(a=>a.id===id);if(!x)return;[['rpTicket','ticket'],['rpDate','date'],['rpCustomer','customer'],['rpPhone','phone'],['rpDevice','device'],['rpSerial','serial'],['rpComplaint','complaint'],['rpInitial','initial'],['rpWork','work'],['rpStatus','status'],['rpQuote','quote'],['rpWarranty','warranty'],['rpFinal','final']].forEach(([a,b])=>$(a).value=x[b]??'');document.querySelector('[data-tab="repairs"]').click();window.scrollTo({top:0,behavior:'smooth'})};
-window.deleteRepair=id=>{if(confirm('Delete this repair job?')){write('mtkRepairJobs',read('mtkRepairJobs',[]).filter(x=>x.id!==id));renderAll()}};
-$('debtForm').onsubmit=e=>{e.preventDefault();let arr=read('mtkDebts',[]);arr.push({id:Date.now(),customer:$('dbCustomer').value,phone:$('dbPhone').value,ref:$('dbRef').value,date:$('dbDate').value,total:Number($('dbTotal').value),paid:Number($('dbPaid').value||0),due:$('dbDue').value,notes:$('dbNotes').value});write('mtkDebts',arr);e.target.reset();$('dbDate').value=today();$('dbPaid').value=0;renderAll();alert('Balance saved.')};
+window.deleteRepair=async id=>{if(confirm('Delete this repair job?')&&await saveData({mtkRepairJobs:read('mtkRepairJobs',[]).filter(x=>x.id!==id)}))renderAll()};
+$('debtForm').onsubmit=async e=>{e.preventDefault();let arr=read('mtkDebts',[]);arr.push({id:Date.now(),customer:$('dbCustomer').value,phone:$('dbPhone').value,ref:$('dbRef').value,date:$('dbDate').value,total:Number($('dbTotal').value),paid:Number($('dbPaid').value||0),due:$('dbDue').value,notes:$('dbNotes').value});if(!await saveData({mtkDebts:arr}))return;e.target.reset();$('dbDate').value=today();$('dbPaid').value=0;renderAll();alert('Balance encrypted and saved.')};
 function renderDebts(){let a=read('mtkDebts',[]).slice().reverse();$('debtList').innerHTML=a.length?a.map(x=>{let bal=Math.max(0,x.total-x.paid);return `<div class="row"><strong>${esc(x.customer)} · Balance ${money(bal)}</strong><div>Invoice/ticket: ${esc(x.ref)} · Total ${money(x.total)} · Paid ${money(x.paid)}</div><div class="hint">Phone: ${esc(x.phone)} · Date: ${esc(x.date)} · Due: ${esc(x.due)} · ${esc(x.notes)}</div><div class="actions no-print"><button class="btn alt" onclick="addDebtPayment(${x.id})">Record payment</button><button class="btn red" onclick="deleteDebt(${x.id})">Delete</button></div></div>`}).join(''):'<p class="hint">No balances recorded.</p>'}
-window.addDebtPayment=id=>{let a=read('mtkDebts',[]),x=a.find(v=>v.id===id);if(!x)return;let p=Number(prompt('How much did the customer pay now? (R)','0'));if(!p||p<=0)return;x.paid=Math.min(x.total,x.paid+p);write('mtkDebts',a);let tx=read('mtkTransactions',[]);tx.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),type:'income',date:today(),category:'Customer debt payment',amount:p,description:'Payment from '+x.customer+' ('+(x.ref||'no reference')+')',payment:'Cash / check notes',person:x.customer,qty:1,notes:'Recorded from balance tracker; receipt not attached',receipt:'',created:new Date().toISOString()});write('mtkTransactions',tx);renderAll();alert('Payment recorded and added to income. Make sure the payment is real and the amount is correct.')};
-window.deleteDebt=id=>{if(confirm('Delete this balance record?')){write('mtkDebts',read('mtkDebts',[]).filter(x=>x.id!==id));renderAll()}};
-function updateConnectionStatus(){const online=navigator.onLine;const status=$('connectionStatus');status.textContent=online?'Online · Internet available. Your records stay on this device.':'Offline · The installed app and saved records remain available. Receipt scanning needs internet.';status.classList.toggle('offline',!online)}
+window.addDebtPayment=async id=>{let a=read('mtkDebts',[]),x=a.find(v=>v.id===id);if(!x)return;let p=Number(prompt('How much did the customer pay now? (R)','0'));if(!p||p<=0)return;x.paid=Math.min(x.total,x.paid+p);let tx=read('mtkTransactions',[]);tx.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),type:'income',date:today(),category:'Customer debt payment',amount:p,description:'Payment from '+x.customer+' ('+(x.ref||'no reference')+')',payment:'Cash / check notes',person:x.customer,qty:1,notes:'Recorded from balance tracker; receipt not attached',receipt:'',created:new Date().toISOString()});if(!await saveData({mtkDebts:a,mtkTransactions:tx}))return;renderAll();alert('Payment encrypted, saved and added to income. Make sure the payment is real and the amount is correct.')};
+window.deleteDebt=async id=>{if(confirm('Delete this balance record?')&&await saveData({mtkDebts:read('mtkDebts',[]).filter(x=>x.id!==id)}))renderAll()};
+function updateConnectionStatus(){const online=navigator.onLine;const status=$('connectionStatus');status.textContent=online?'Online · Internet available. Your encrypted records stay on this device.':'Offline · The installed app and encrypted saved records remain available. Receipt scanning needs internet.';status.classList.toggle('offline',!online)}
 window.addEventListener('online',updateConnectionStatus);window.addEventListener('offline',updateConnectionStatus);updateConnectionStatus();
 if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('./sw.js').catch(e=>console.error('Could not register the offline app worker.',e));
 function renderLowStock(){let s=read('mtkStock',[]).filter(x=>x.qty<=2);$('lowStockList').innerHTML=s.length?s.map(x=>`<div class="row"><strong>${esc(x.name)}</strong> — only ${x.qty} left <span class="pill">${esc(x.category)}</span></div>`).join(''):'<p class="hint">No items at or below 2 units.</p>'}

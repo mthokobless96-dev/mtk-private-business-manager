@@ -1,17 +1,24 @@
 {
   "name": "MTK Private Business Manager",
   "short_name": "MTK Business",
-  "start_url": "./index.html?v=sky-blue-1",
+  "start_url": "./index.html?v=encrypted-1",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#eff8ff",
   "theme_color": "#38bdf8",
   "description": "Private income, expense, receipt and stock manager for MTK Mobile Solution",
   "icons": [
     {
-      "src": "./mtk-logo.jpeg",
-      "sizes": "1448x1086",
-      "type": "image/jpeg",
+      "src": "./mtk-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "./mtk-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

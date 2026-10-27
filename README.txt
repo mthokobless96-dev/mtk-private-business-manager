@@ -7,7 +7,7 @@ FEATURES
 - Outstanding customer balance tracker with due dates and payment recording.
 - Low-stock alerts when quantity is 2 or fewer.
 - Optional receipt OCR text extraction (internet required; verify results).
-- First-use password setup and local app lock.
+- First-use password setup and AES-GCM encryption for saved business records.
 - Record money received (sales/repairs) and money spent (stock, parts, tools, transport, and other costs).
 - Attach a photo of a receipt/slip using the phone camera or image picker.
 - View income, expenses, and net cash gain/loss over a selected date range.
@@ -17,19 +17,21 @@ FEATURES
 
 IMPORTANT LIMITATIONS
 - This is a private local-first prototype, not a cloud service. Records and receipt photos stay in this browser on this device unless you export a backup.
-- Password is a local lock only. It is not strong encryption. Protect your phone and browser storage; anyone with device/storage access may bypass the lock.
+- Saved business records are encrypted on this device using AES-GCM with a key derived from the app password (PBKDF2-HMAC-SHA-256). Encryption does not protect data while the app is unlocked or a phone is compromised. Forgotten passwords cannot recover encrypted records.
+- Exported JSON backups are not encrypted. Store backup files privately and protect the phone with a strong screen lock.
+- On the first launch after this update, enter your existing app password to encrypt existing records. Do not clear browser/app storage before that migration finishes.
 - Browser storage has a limit. Receipt photos are compressed; if storage becomes full, export a backup and reduce stored photos.
 - Optional receipt OCR attempts to extract text and suggest an amount using an online OCR library. It requires internet access, can make mistakes, and the user must verify every field before saving. Manual entry remains available.
 - The cash gain/loss report is income recorded minus expenses recorded, not a formal profit statement or tax calculation. Do not record the same stock purchase or sale twice.
 - Stock quantity changes are manual; pressing “-1 sold/used” does not automatically create a sales transaction.
 - Includes repair job/customer history, unpaid balance tracking, and low-stock warnings. Customer balance payments are added to income when you press Record payment; verify the amount before confirming.
-- For stronger security and use across devices, a later version needs a secure backend, encrypted storage, user authentication, and tested backups.
+- Records remain on this device and do not sync across devices. A future sync feature would need a secure backend, account authentication, and tested backups.
 
 RUN ON YOUR PHONE
 1. Connect to the internet and open the online app in Android Chrome.
-2. Choose Install app / Add to Home screen and open the installed app once while online.
+2. On Android Chrome, choose Install app / Add to Home screen. On iPhone Safari, choose Share / Add to Home Screen.
 3. After the first online visit, open the installed app again without internet to use saved records offline.
-4. Create your private password on first launch.
+4. Create a strong private password on first launch; keep it safe because it cannot be reset to recover encrypted data.
 5. Export backups regularly and keep them somewhere private.
 
 ONLINE AND OFFLINE USE
@@ -42,9 +44,9 @@ This package is the PWA source, not a compiled APK. After hosting over HTTPS, yo
 
 SDLC TEST PLAN
 1. Requirements: income, expenses, receipts, stock, date-range totals, private login.
-2. Design: MTK teal/black/silver style and phone-friendly screens.
+2. Design: MTK branding, sky-blue theme, and phone-friendly screens.
 3. Build: transaction log, receipt attachment, inventory, summaries, backup.
 4. Test: password setup/incorrect password, save income/expense, attach receipt, filter dates, stock quantity, export/import, print, storage limits, offline use.
 5. Pilot: enter a few sample transactions and compare totals to a calculator and paper slips.
-6. Release: host securely, package APK, test install and backups.
+6. Release: host over HTTPS, test installation and offline use, and verify backups.
 7. Maintenance: fix bugs, update versions, and regularly verify backups.
