@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#38bdf8"><meta name="description" content="Manage MTK Mobile Solution income, expenses, stock, repairs and customer balances in one private workspace."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MTK Business"><link rel="manifest" href="./manifest.webmanifest?v=encrypted-1"><link rel="apple-touch-icon" href="./mtk-icon-192.png"><link rel="icon" type="image/jpeg" href="./mtk-logo.jpeg"><title>MTK Private Business Manager</title>
+<meta name="theme-color" content="#38bdf8"><meta name="description" content="Manage MTK Mobile Solution income, expenses, stock, repairs and customer balances in one private workspace."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MTK Business"><link rel="manifest" href="./manifest.webmanifest?v=themes-recovery-1"><link rel="apple-touch-icon" href="./mtk-icon-192.png"><link rel="icon" type="image/jpeg" href="./mtk-logo.jpeg"><title>MTK Private Business Manager</title>
 <style>
 :root{color-scheme:light;--sky:#38bdf8;--sky-dark:#0284c7;--sky-soft:#e0f2fe;--dark:#eff8ff;--panel:#fff;--panel-raised:#f7fbff;--line:#cfe6f5;--muted:#506b7e;--text:#17364b;--success:#16835d;--danger:#c5394b}
 *{box-sizing:border-box}
@@ -58,6 +58,52 @@ input[type=file]{padding:7px}
 .pill{display:inline-block;font-size:11px;background:#e2f4ff;border:1px solid #c1e5f9;border-radius:20px;padding:3px 9px;color:#17608c}
 @media(max-width:600px){header{padding:18px 14px 14px}.brand-logo{max-width:390px;height:195px}header p{font-size:12px;letter-spacing:1.7px}.connection-status{margin:10px 12px 0}main{padding:16px 12px 28px}.card{padding:16px;border-radius:13px;margin-bottom:13px}.grid{gap:11px}.tabs{margin-right:-12px;margin-left:-4px;padding-right:12px}.actions .btn{flex:1 1 auto}#login{margin:24px 12px;padding:20px}.stat{padding:13px}}
 @media print{body{background:#fff;color:#111}header{background:#eff8ff;border-color:#b7ddf4}.brand-logo{height:160px}header p,h2,.slogan{color:#075b91}.card{background:#fff;color:#111;border:1px solid #aaa;box-shadow:none}.stat,.row{background:#fff;color:#111;border:1px solid #bbb}.stat span,.hint,label{color:#333}.no-print{display:none!important}input,select,textarea{background:#fff;color:#111}}
+body[data-theme="teal"]{background:radial-gradient(ellipse at 50% -18%,#c9f1ee 0,transparent 52%),#effaf9;color:#164b4a}
+body[data-theme="teal"] header{background:linear-gradient(180deg,rgba(220,247,244,.97),rgba(239,250,249,.9));border-color:#b8e4df}
+body[data-theme="teal"] header p,body[data-theme="teal"] h2,body[data-theme="teal"] .row strong{color:#145c58}
+body[data-theme="teal"] h3,body[data-theme="teal"] .pill{color:#08766e}
+body[data-theme="teal"] .card{background:linear-gradient(145deg,#fff,#f7fdfc);border-color:#c8e8e4}
+body[data-theme="teal"] input,body[data-theme="teal"] select,body[data-theme="teal"] textarea{background:#fff;color:#164b4a;border-color:#c5e1de}
+body[data-theme="teal"] input:focus,body[data-theme="teal"] select:focus,body[data-theme="teal"] textarea:focus{border-color:#0f8279;box-shadow:0 0 0 3px rgba(20,184,166,.18)}
+body[data-theme="teal"] .btn:not(.alt):not(.red){background:#2dd4bf;color:#083b38}
+body[data-theme="teal"] .btn:not(.alt):not(.red):hover{background:#5eead4}
+body[data-theme="teal"] .btn.alt{background:#edf9f7;color:#285d59;border-color:#c4e6e1}
+body[data-theme="teal"] .btn.alt:hover{background:#def4f0;border-color:#91d3ca}
+body[data-theme="teal"] .tabs button{background:#fff;color:#456a66;border-color:#cce5e1}
+body[data-theme="teal"] .tabs button:hover,body[data-theme="teal"] .tabs button.active{background:#d7f4ef;color:#075e57;border-color:#83d6ca}
+body[data-theme="teal"] .stat{background:linear-gradient(145deg,#effaf8,#e3f5f2);border-color:#c8e8e4}
+body[data-theme="teal"] .stat span,body[data-theme="teal"] label,body[data-theme="teal"] .check label{color:#456a66}
+body[data-theme="teal"] .row,body[data-theme="teal"] .check{background:#f2fbf9;border-color:#d1ebe7}
+body[data-theme="teal"] .pill{background:#e2f7f3;border-color:#c1e9e2}
+body[data-theme="teal"] .connection-status{background:#fff;color:#456a66;border-color:#c8e8e4}
+body[data-theme="dark"]{color-scheme:dark;background:radial-gradient(ellipse at 50% -18%,#193a51 0,transparent 52%),#101c27;color:#e3edf5}
+body[data-theme="dark"] header{background:linear-gradient(180deg,rgba(22,42,58,.97),rgba(16,28,39,.94));border-color:#2a4357}
+body[data-theme="dark"] header p,body[data-theme="dark"] h2,body[data-theme="dark"] .row strong{color:#c6e8fa}
+body[data-theme="dark"] h3,body[data-theme="dark"] .pill{color:#8ed8ff}
+body[data-theme="dark"] .card{background:linear-gradient(145deg,#1b2b39,#172532);border-color:#304657;box-shadow:0 12px 32px rgba(0,0,0,.2)}
+body[data-theme="dark"] input,body[data-theme="dark"] select,body[data-theme="dark"] textarea{background:#13212c;color:#e3edf5;border-color:#3a5265}
+body[data-theme="dark"] input::placeholder,body[data-theme="dark"] textarea::placeholder{color:#9aabba}
+body[data-theme="dark"] input:focus,body[data-theme="dark"] select:focus,body[data-theme="dark"] textarea:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.2)}
+body[data-theme="dark"] .btn:not(.alt):not(.red){background:#38bdf8;color:#062b40}
+body[data-theme="dark"] .btn:not(.alt):not(.red):hover{background:#7dd3fc}
+body[data-theme="dark"] .btn.alt{background:#203748;color:#d4e9f4;border-color:#385568}
+body[data-theme="dark"] .btn.alt:hover{background:#294559;border-color:#52758b}
+body[data-theme="dark"] .tabs button{background:#1b2b39;color:#b1c6d5;border-color:#344b5d}
+body[data-theme="dark"] .tabs button:hover,body[data-theme="dark"] .tabs button.active{background:#164466;color:#d1efff;border-color:#3479a2}
+body[data-theme="dark"] .stat{background:linear-gradient(145deg,#203546,#1a2c3a);border-color:#354f62}
+body[data-theme="dark"] .stat span,body[data-theme="dark"] label,body[data-theme="dark"] .check label{color:#b4c6d3}
+body[data-theme="dark"] .row,body[data-theme="dark"] .check{background:#1a2b38;border-color:#344b5d}
+body[data-theme="dark"] .pill{background:#18374b;border-color:#315a72}
+body[data-theme="dark"] .connection-status{background:#1b2b39;color:#c5d6e0;border-color:#354d60}
+body[data-theme="dark"] .warning{background:#3a3020;color:#f5dcab;border-color:#725b32}
+body[data-theme="dark"] .warning{border-left-color:#d89213}
+body[data-theme="dark"] .connection-status.offline{background:#3a3020;color:#f5dcab;border-color:#725b32}
+body[data-theme="dark"] .connection-status.offline::before{background:#d89213}
+body[data-theme="dark"] .recovery-dialog{background:#1b2b39;border-color:#354f62}
+.recovery-overlay{position:fixed;inset:0;z-index:10;display:grid;place-items:center;overflow:auto;padding:20px;background:rgba(9,24,36,.72)}
+.recovery-dialog{width:min(100%,560px);max-height:calc(100vh - 40px);overflow:auto;background:var(--panel,#fff);border:1px solid var(--line,#cfe6f5);border-radius:16px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.25)}
+.recovery-key{font:700 15px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em;overflow-wrap:anywhere;user-select:all}
+@media(max-width:600px){.recovery-overlay{padding:12px}.recovery-dialog{max-height:calc(100vh - 24px);padding:18px}}
 </style></head>
 <body>
 <header><img class="brand-logo" src="./mtk-logo.jpeg" alt="MTK Mobile Solution logo"><p>PRIVATE BUSINESS MANAGER</p><div class="slogan">WE FIX, YOU SMILE</div></header>
@@ -68,7 +114,9 @@ input[type=file]{padding:7px}
 <div><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="At least 8 characters"></div>
 <div id="confirmWrap" style="margin-top:10px"><label>Confirm password</label><input id="confirmPassword" type="password" autocomplete="new-password"></div>
 <div class="actions"><button class="btn" id="loginBtn">Create password</button></div><p class="hint" id="loginMsg"></p>
-<div class="warning">Your password encrypts saved records on this device. This does not protect data while the app is unlocked or a phone is compromised. Forgotten passwords cannot recover encrypted records. JSON backups are not encrypted, so protect your phone and backup files.</div>
+<div class="actions"><button class="btn alt" id="forgotPasswordBtn" type="button">Forgot password?</button></div>
+<section id="recoverPassword" class="hidden"><h3>Recover with your recovery key</h3><p class="hint">This only works if you saved a recovery key on this device. The recovery key resets your app password while keeping your encrypted records.</p><label for="recoveryInput">Recovery key</label><input id="recoveryInput" autocomplete="off" spellcheck="false" placeholder="Paste your saved recovery key"><label for="recoveryNewPassword" style="margin-top:10px">New password</label><input id="recoveryNewPassword" type="password" autocomplete="new-password" placeholder="At least 8 characters"><label for="recoveryConfirmPassword" style="margin-top:10px">Confirm new password</label><input id="recoveryConfirmPassword" type="password" autocomplete="new-password"><div class="actions"><button class="btn" id="recoverPasswordBtn" type="button">Recover account</button></div><p id="recoveryMsg" class="hint" role="status"></p></section>
+<div class="warning">Your password encrypts saved records on this device. Use the recovery key to reset a forgotten password. This does not protect data while the app is unlocked or a phone is compromised. JSON backups are not encrypted, so protect your phone and backup files.</div>
 </section>
 <div id="app" class="hidden">
 <main>
@@ -79,7 +127,7 @@ input[type=file]{padding:7px}
 <div class="stat"><span>Expenses / money spent</span><strong id="totalExpense">R0.00</strong></div>
 <div class="stat"><span>Profit / loss (cash view)</span><strong id="net">R0.00</strong></div>
 <div class="stat"><span>Inventory items in stock</span><strong id="stockCount">0</strong></div></div><p class="hint">Cash-view result = money recorded as received minus money recorded as spent for the selected dates. It is not a full accounting/tax statement. Record stock purchases as expenses and sales as income; do not count the same transaction twice.</p></section>
-<div class="tabs no-print"><button class="active" data-tab="transaction">Income & expenses</button><button data-tab="inventory">Accessories & stock</button><button data-tab="history">Transaction history</button><button data-tab="repairs">Repair jobs & customers</button><button data-tab="debts">Debts / unpaid</button><button data-tab="reports">Reports & backup</button></div>
+<div class="tabs no-print"><button class="active" data-tab="transaction">Income & expenses</button><button data-tab="inventory">Accessories & stock</button><button data-tab="history">Transaction history</button><button data-tab="repairs">Repair jobs & customers</button><button data-tab="debts">Debts / unpaid</button><button data-tab="reports">Reports & backup</button><button data-tab="settings">Settings</button></div>
 <section class="card panel" id="panel-transaction"><h2>Add money received or spent</h2><form id="transactionForm"><div class="grid">
 <div><label>Transaction type *</label><select id="txType"><option value="income">Money received / sale</option><option value="expense">Money spent / expense</option></select></div>
 <div><label>Date *</label><input id="txDate" type="date" required></div>
@@ -131,8 +179,10 @@ input[type=file]{padding:7px}
 </div><label style="margin-top:10px">Notes</label><textarea id="dbNotes"></textarea><div class="actions"><button class="btn" type="submit">Save balance</button></div></form>
 <h3>Outstanding balances</h3><div id="debtList"></div></section>
 <section class="card panel hidden" id="panel-reports"><h2>Reports & backup</h2><p>Export a JSON backup to keep your transactions, stock list, and receipt photos together. Backup files are not encrypted; store them securely.</p><div class="actions"><button class="btn" id="exportBtn2">Export full backup</button><label class="btn alt" style="display:inline-flex;align-items:center;cursor:pointer">Import backup<input id="importFile2" type="file" accept=".json,application/json" hidden></label></div><h3>Selected period totals</h3><div id="reportSummary"></div><h3>Business record checklist</h3><ul class="hint"><li>Keep supplier slips for accessories and repair parts.</li><li>Record sales and repair payments on the date received.</li><li>Keep personal spending separate from business spending.</li><li>Count stock regularly and correct quantities.</li><li>Back up data after entering new transactions.</li></ul></section>
+<section class="card panel hidden" id="panel-settings"><h2>App settings</h2><label for="themeSelect">App theme</label><select id="themeSelect"><option value="sky">Sky blue</option><option value="teal">Teal</option><option value="dark">Dark</option></select><p class="hint">Your theme choice is saved on this device and stays selected when you reopen the app.</p><h3>Password recovery</h3><p class="hint">Create a recovery key before you forget your password. Store it somewhere safe outside this app. Anyone with this key can reset your password and read this device's business records. Creating a new key replaces the previous one.</p><div class="actions"><button class="btn alt" id="createRecoveryKeyBtn" type="button">Create / replace recovery key</button></div><p class="hint">Recovery works only on this device while its encrypted records are still available. It cannot reset a password remotely or recover cleared browser storage.</p></section>
 <div class="slogan">WE FIX, YOU SMILE</div>
 </main></div>
+<div id="recoveryKeyOverlay" class="recovery-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="recoveryKeyTitle"><section class="recovery-dialog card"><h2 id="recoveryKeyTitle">Save your recovery key</h2><p id="recoveryKeyIntro" class="hint">This key is shown once. Save it somewhere private outside this device. Anyone with the key can reset your password and access your encrypted records.</p><div id="recoveryKeyValue" class="recovery-key row"></div><div class="actions"><button class="btn alt" id="copyRecoveryKeyBtn" type="button">Copy recovery key</button><button class="btn alt" id="downloadRecoveryKeyBtn" type="button">Download recovery key</button></div><label class="check" style="margin-top:14px"><input id="recoveryKeySaved" type="checkbox"> I saved this key somewhere safe</label><div class="actions"><button class="btn" id="finishRecoveryKeyBtn" type="button" disabled>Continue</button></div></section></div>
 <script>
 const $=id=>document.getElementById(id);
 const today=()=>new Date().toISOString().slice(0,10);
@@ -143,14 +193,31 @@ const KDF_ITERATIONS=310000;
 const encoder=new TextEncoder();
 const decoder=new TextDecoder();
 const VERIFIER_CONTEXT=encoder.encode('mtk-business-password-verifier-v1');
+const RECOVERY_CONTEXT=encoder.encode('mtk-business-recovery-verifier-v1');
 const DATA_CONTEXT=encoder.encode('mtk-business-data-v1');
+const PASSWORD_WRAP_CONTEXT=encoder.encode('mtk-business-password-wrap-v2');
+const RECOVERY_WRAP_CONTEXT=encoder.encode('mtk-business-recovery-wrap-v2');
+const THEME_STORAGE_KEY='mtkTheme';
+const themes={sky:'#38bdf8',teal:'#14b8a6',dark:'#101c27'};
 let businessData=null;
 let encryptionKey=null;
+let dataKeyBytes=null;
+let recoveryEnvelope=null;
 let activeCredential=null;
 let saveQueue=Promise.resolve();
 let saveRevision=0;
 let latestSaveFailed=false;
+let pendingRecoveryKey=null;
 const read=(k,d)=>businessData?.[k]??d;
+function applyTheme(theme,save=false){
+ if(!Object.prototype.hasOwnProperty.call(themes,theme))theme='sky';
+ document.body.dataset.theme=theme;
+ $('themeSelect').value=theme;
+ document.querySelector('meta[name="theme-color"]').content=themes[theme];
+ if(save){try{localStorage.setItem(THEME_STORAGE_KEY,theme)}catch(error){console.error('Could not save the selected app theme.',error);alert('The app theme changed, but this device could not save the selection.')}}
+}
+applyTheme(localStorage.getItem(THEME_STORAGE_KEY)||'sky');
+$('themeSelect').onchange=()=>applyTheme($('themeSelect').value,true);
 async function hash(s){const b=await crypto.subtle.digest('SHA-256',encoder.encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 function bytesToBase64(bytes){let binary='';for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(binary)}
 function base64ToBytes(value){const binary=atob(value),bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);return bytes}
@@ -163,8 +230,10 @@ async function derivePasswordKeys(password,salt){
   return{encryption,verifier};
  }finally{raw.fill(0)}
 }
-async function passwordVerifier(key){return new Uint8Array(await crypto.subtle.sign('HMAC',key,VERIFIER_CONTEXT))}
+async function passwordVerifier(key,context=VERIFIER_CONTEXT){return new Uint8Array(await crypto.subtle.sign('HMAC',key,context))}
 function bytesEqual(left,right){if(left.length!==right.length)return false;let difference=0;for(let i=0;i<left.length;i++)difference|=left[i]^right[i];return difference===0}
+function generateRecoveryKey(){return bytesToBase64(crypto.getRandomValues(new Uint8Array(32))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function decodeRecoveryKey(value){const normalized=value.replace(/\s/g,'');if(!/^[A-Za-z0-9_-]{43}$/.test(normalized))throw Error('Enter the complete recovery key exactly as shown.');const bytes=base64ToBytes(normalized.replace(/-/g,'+').replace(/_/g,'/')+'=');if(bytes.length!==32)throw Error('The recovery key is invalid.');return normalized}
 function readLegacyData(){
  const readArray=key=>{const raw=localStorage.getItem(key);if(raw===null)return[];const value=JSON.parse(raw);if(!Array.isArray(value))throw Error(`Legacy data for ${key} is invalid.`);return value};
  return{mtkTransactions:readArray('mtkTransactions'),mtkStock:readArray('mtkStock'),mtkRepairJobs:readArray('mtkRepairJobs'),mtkDebts:readArray('mtkDebts')};
@@ -175,46 +244,85 @@ function getEncryptedRecord(){
  const raw=localStorage.getItem(ENCRYPTED_DATA_KEY);
  if(!raw)return null;
  const record=JSON.parse(raw);
- if(record.version!==1||record.algorithm!=='PBKDF2-HMAC-SHA-256'||record.iterations!==KDF_ITERATIONS||typeof record.salt!=='string'||typeof record.verifier!=='string'||typeof record.iv!=='string'||typeof record.ciphertext!=='string')throw Error('The encrypted data record is invalid.');
+ if((record.version!==1&&record.version!==2)||record.algorithm!=='PBKDF2-HMAC-SHA-256'||record.iterations!==KDF_ITERATIONS||typeof record.salt!=='string'||typeof record.verifier!=='string'||typeof record.iv!=='string'||typeof record.ciphertext!=='string')throw Error('The encrypted data record is invalid.');
  const salt=base64ToBytes(record.salt),iv=base64ToBytes(record.iv),verifier=base64ToBytes(record.verifier);
  if(salt.length!==16||iv.length!==12||verifier.length!==32)throw Error('The encrypted data record is invalid.');
+ if(record.version===2){
+  if(typeof record.recoverySalt!=='string'||typeof record.recoveryVerifier!=='string'||typeof record.keyIv!=='string'||typeof record.wrappedKey!=='string'||typeof record.recoveryKeyIv!=='string'||typeof record.recoveryWrappedKey!=='string')throw Error('The encrypted data record is invalid.');
+  if(base64ToBytes(record.recoverySalt).length!==16||base64ToBytes(record.recoveryVerifier).length!==32||base64ToBytes(record.keyIv).length!==12||base64ToBytes(record.recoveryKeyIv).length!==12||base64ToBytes(record.wrappedKey).length!==48||base64ToBytes(record.recoveryWrappedKey).length!==48)throw Error('The encrypted data record is invalid.');
+ }
  return record;
 }
-async function persistEncryptedData(data,credential,key){
+async function createRecoveryEnvelope(dataKey,wrappingKey){
  const iv=crypto.getRandomValues(new Uint8Array(12));
- const ciphertext=await crypto.subtle.encrypt({name:'AES-GCM',iv,additionalData:DATA_CONTEXT},key,encoder.encode(JSON.stringify(data)));
- localStorage.setItem(ENCRYPTED_DATA_KEY,JSON.stringify({...credential,iv:bytesToBase64(iv),ciphertext:bytesToBase64(new Uint8Array(ciphertext))}));
+ const wrappedKey=await crypto.subtle.encrypt({name:'AES-GCM',iv,additionalData:RECOVERY_WRAP_CONTEXT},wrappingKey,dataKey);
+ return{recoveryKeyIv:bytesToBase64(iv),recoveryWrappedKey:bytesToBase64(new Uint8Array(wrappedKey))};
+}
+async function persistEncryptedData(data,credential,passwordKey,dataKey,recoveryKey,existingRecoveryEnvelope){
+ const contentKey=await crypto.subtle.importKey('raw',dataKey,{name:'AES-GCM'},false,['encrypt','decrypt']);
+ const iv=crypto.getRandomValues(new Uint8Array(12)),keyIv=crypto.getRandomValues(new Uint8Array(12));
+ const ciphertext=await crypto.subtle.encrypt({name:'AES-GCM',iv,additionalData:DATA_CONTEXT},contentKey,encoder.encode(JSON.stringify(data)));
+ const wrappedKey=await crypto.subtle.encrypt({name:'AES-GCM',iv:keyIv,additionalData:PASSWORD_WRAP_CONTEXT},passwordKey,dataKey);
+ const recovery= recoveryKey?await createRecoveryEnvelope(dataKey,recoveryKey):existingRecoveryEnvelope;
+ if(!recovery)throw Error('A recovery key is required to save encrypted records.');
+ const saved={...credential,keyIv:bytesToBase64(keyIv),wrappedKey:bytesToBase64(new Uint8Array(wrappedKey)),...recovery,iv:bytesToBase64(iv),ciphertext:bytesToBase64(new Uint8Array(ciphertext))};
+ localStorage.setItem(ENCRYPTED_DATA_KEY,JSON.stringify(saved));
+ return recovery;
 }
 async function createEncryptedStorage(password,data){
  const salt=crypto.getRandomValues(new Uint8Array(16));
  const keys=await derivePasswordKeys(password,salt);
- const credential={version:1,algorithm:'PBKDF2-HMAC-SHA-256',iterations:KDF_ITERATIONS,salt:bytesToBase64(salt),verifier:bytesToBase64(await passwordVerifier(keys.verifier))};
- await persistEncryptedData(data,credential,keys.encryption);
+ const recoveryKey=generateRecoveryKey(),recoverySalt=crypto.getRandomValues(new Uint8Array(16));
+ const recoveryKeys=await derivePasswordKeys(recoveryKey,recoverySalt);
+ const dataKey=crypto.getRandomValues(new Uint8Array(32));
+ const credential={version:2,algorithm:'PBKDF2-HMAC-SHA-256',iterations:KDF_ITERATIONS,salt:bytesToBase64(salt),verifier:bytesToBase64(await passwordVerifier(keys.verifier)),recoverySalt:bytesToBase64(recoverySalt),recoveryVerifier:bytesToBase64(await passwordVerifier(recoveryKeys.verifier,RECOVERY_CONTEXT))};
+ const savedRecovery=await persistEncryptedData(data,credential,keys.encryption,dataKey,recoveryKeys.encryption);
  removeLegacyData();
  businessData=data;
  encryptionKey=keys.encryption;
+ dataKeyBytes=dataKey;
+ recoveryEnvelope=savedRecovery;
  activeCredential=credential;
+ return recoveryKey;
 }
 async function unlockWithPassword(password){
  const record=getEncryptedRecord();
  if(!record)return false;
  const keys=await derivePasswordKeys(password,base64ToBytes(record.salt));
  if(!bytesEqual(await passwordVerifier(keys.verifier),base64ToBytes(record.verifier)))return false;
- const plaintext=await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(record.iv),additionalData:DATA_CONTEXT},keys.encryption,base64ToBytes(record.ciphertext));
- const data=JSON.parse(decoder.decode(plaintext));
- if(!data||!['mtkTransactions','mtkStock','mtkRepairJobs','mtkDebts'].every(key=>Array.isArray(data[key])))throw Error('The encrypted business records are invalid.');
+ let dataKey,contentKey,recoveryKey=null,credential,data;
+ if(record.version===1){
+  const plaintext=await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(record.iv),additionalData:DATA_CONTEXT},keys.encryption,base64ToBytes(record.ciphertext));
+  data=JSON.parse(decoder.decode(plaintext));
+  if(!data||!['mtkTransactions','mtkStock','mtkRepairJobs','mtkDebts'].every(key=>Array.isArray(data[key])))throw Error('The encrypted business records are invalid.');
+  recoveryKey=generateRecoveryKey();
+  const recoverySalt=crypto.getRandomValues(new Uint8Array(16)),recoveryKeys=await derivePasswordKeys(recoveryKey,recoverySalt);
+  dataKey=crypto.getRandomValues(new Uint8Array(32));
+  credential={version:2,algorithm:'PBKDF2-HMAC-SHA-256',iterations:KDF_ITERATIONS,salt:record.salt,verifier:record.verifier,recoverySalt:bytesToBase64(recoverySalt),recoveryVerifier:bytesToBase64(await passwordVerifier(recoveryKeys.verifier,RECOVERY_CONTEXT))};
+  recoveryEnvelope=await persistEncryptedData(data,credential,keys.encryption,dataKey,recoveryKeys.encryption);
+ }else{
+  dataKey=new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(record.keyIv),additionalData:PASSWORD_WRAP_CONTEXT},keys.encryption,base64ToBytes(record.wrappedKey)));
+  if(dataKey.length!==32)throw Error('The encrypted data key is invalid.');
+  contentKey=await crypto.subtle.importKey('raw',dataKey,{name:'AES-GCM'},false,['decrypt']);
+  const plaintext=await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(record.iv),additionalData:DATA_CONTEXT},contentKey,base64ToBytes(record.ciphertext));
+  data=JSON.parse(decoder.decode(plaintext));
+  if(!data||!['mtkTransactions','mtkStock','mtkRepairJobs','mtkDebts'].every(key=>Array.isArray(data[key])))throw Error('The encrypted business records are invalid.');
+  credential={version:record.version,algorithm:record.algorithm,iterations:record.iterations,salt:record.salt,verifier:record.verifier,recoverySalt:record.recoverySalt,recoveryVerifier:record.recoveryVerifier};
+  recoveryEnvelope={recoveryKeyIv:record.recoveryKeyIv,recoveryWrappedKey:record.recoveryWrappedKey};
+ }
  removeLegacyData();
  businessData=data;
  encryptionKey=keys.encryption;
- activeCredential={version:record.version,algorithm:record.algorithm,iterations:record.iterations,salt:record.salt,verifier:record.verifier};
- return true;
+ dataKeyBytes=dataKey;
+ activeCredential=credential;
+ return recoveryKey;
 }
 async function saveData(updates){
- if(!businessData||!encryptionKey||!activeCredential)throw Error('Unlock the app before saving business records.');
+ if(!businessData||!encryptionKey||!dataKeyBytes||!activeCredential||!recoveryEnvelope)throw Error('Unlock the app before saving business records.');
  const next={...businessData,...updates};
  businessData=next;
  const revision=++saveRevision;
- const pending=saveQueue.then(()=>persistEncryptedData(next,activeCredential,encryptionKey));
+ const pending=saveQueue.then(()=>persistEncryptedData(next,activeCredential,encryptionKey,dataKeyBytes,null,recoveryEnvelope));
  saveQueue=pending.catch(()=>{});
  try{
   await pending;
@@ -227,22 +335,26 @@ async function saveData(updates){
   return false;
  }
 }
-function showLogin(){ $('app').classList.add('hidden');$('login').classList.remove('hidden');$('confirmWrap').classList.toggle('hidden',passwordExists());$('loginTitle').textContent=passwordExists()?'Unlock MTK Private Business Manager':'Create your private password';$('loginBtn').textContent=passwordExists()?'Unlock':'Create password'}
+function showLogin(){ const hasPassword=passwordExists();$('app').classList.add('hidden');$('login').classList.remove('hidden');$('confirmWrap').classList.toggle('hidden',hasPassword);$('forgotPasswordBtn').classList.toggle('hidden',!hasPassword);$('loginTitle').textContent=hasPassword?'Unlock MTK Private Business Manager':'Create your private password';$('loginBtn').textContent=hasPassword?'Unlock':'Create password';$('password').value='';$('recoverPassword').classList.add('hidden');$('recoveryInput').value='';$('recoveryNewPassword').value='';$('recoveryConfirmPassword').value='';$('recoveryMsg').textContent=''}
 async function handleLogin(){
  const password=$('password').value;
  if(password.length<8){$('loginMsg').textContent='Use at least 8 characters.';return}
  $('loginBtn').disabled=true;
  try{
+  let newRecoveryKey=null;
   if(localStorage.getItem(ENCRYPTED_DATA_KEY)){
-   if(!await unlockWithPassword(password)){$('loginMsg').textContent='Incorrect password. Try again.';return}
+   const result=await unlockWithPassword(password);
+   if(result===false){$('loginMsg').textContent='Incorrect password. Try again.';return}
+   newRecoveryKey=result;
   }else{
    const legacyHash=localStorage.getItem('mtkPassHash');
    if(legacyHash){
     if(await hash(password)!==legacyHash){$('loginMsg').textContent='Incorrect password. Try again.';return}
    }else if(password!==$('confirmPassword').value){$('loginMsg').textContent='Passwords do not match.';return}
-   await createEncryptedStorage(password,readLegacyData());
+   newRecoveryKey=await createEncryptedStorage(password,readLegacyData());
   }
   unlock();
+  if(newRecoveryKey)showRecoveryKey(newRecoveryKey);
  }catch(error){
   console.error('Could not unlock or encrypt business records.',error);
   $('loginMsg').textContent='Could not unlock or encrypt saved records. Your existing data has not been removed.';
@@ -250,6 +362,77 @@ async function handleLogin(){
 }
 $('loginBtn').onclick=handleLogin;
 function unlock(){$('login').classList.add('hidden');$('app').classList.remove('hidden');$('password').value='';$('confirmPassword').value='';$('loginMsg').textContent='';renderAll()}
+function showRecoveryKey(key,isReplacement=false){
+ pendingRecoveryKey=key;
+ $('recoveryKeyTitle').textContent=isReplacement?'Save your new recovery key':'Save your recovery key';
+ $('recoveryKeyIntro').textContent=isReplacement?'This key replaces your previous recovery key. Save it somewhere private outside this device. Anyone with the key can reset your password and access your encrypted records.':'This key is shown once. Save it somewhere private outside this device. Anyone with the key can reset your password and access your encrypted records.';
+ $('recoveryKeyValue').textContent=key;
+ $('recoveryKeySaved').checked=false;
+ $('finishRecoveryKeyBtn').disabled=true;
+ $('recoveryKeyOverlay').classList.remove('hidden');
+}
+function finishRecoveryKey(){
+ if(!$('recoveryKeySaved').checked){$('recoveryKeySaved').focus();return}
+ pendingRecoveryKey=null;
+ $('recoveryKeyValue').textContent='';
+ $('recoveryKeyOverlay').classList.add('hidden');
+}
+$('recoveryKeySaved').onchange=()=>{$('finishRecoveryKeyBtn').disabled=!$('recoveryKeySaved').checked};
+$('finishRecoveryKeyBtn').onclick=finishRecoveryKey;
+$('copyRecoveryKeyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(pendingRecoveryKey);alert('Recovery key copied. Store it somewhere private.')}catch(error){console.error('Could not copy the recovery key.',error);alert('Could not copy the recovery key. Select and copy the displayed key instead.')}};
+$('downloadRecoveryKeyBtn').onclick=()=>{const blob=new Blob([`MTK Private Business Manager recovery key\nKeep this key private. Anyone who has it can reset your password and read this device's business records.\n\n${pendingRecoveryKey}\n`],{type:'text/plain'});const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='mtk-business-recovery-key.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+$('forgotPasswordBtn').onclick=()=>{$('recoverPassword').classList.toggle('hidden');$('recoveryMsg').textContent='';if(!$('recoverPassword').classList.contains('hidden'))$('recoveryInput').focus()};
+async function recoverPassword(){
+ const recoveryPassword=$('recoveryInput').value.trim(),newPassword=$('recoveryNewPassword').value;
+ if(newPassword.length<8){$('recoveryMsg').textContent='Use at least 8 characters for your new password.';return}
+ if(newPassword!==$('recoveryConfirmPassword').value){$('recoveryMsg').textContent='The new passwords do not match.';return}
+ $('recoverPasswordBtn').disabled=true;
+ try{
+  await saveQueue;
+  if(latestSaveFailed)throw Error('Your latest changes were not saved. Unlock with the current password and save them before recovering.');
+  const record=getEncryptedRecord();
+  if(!record?.recoverySalt||!record.recoveryVerifier)throw Error('No recovery key was set up for these records. If you still know your password, unlock the app and create one in Settings.');
+  const keyText=decodeRecoveryKey(recoveryPassword);
+  const recoveryKeys=await derivePasswordKeys(keyText,base64ToBytes(record.recoverySalt));
+  if(!bytesEqual(await passwordVerifier(recoveryKeys.verifier,RECOVERY_CONTEXT),base64ToBytes(record.recoveryVerifier)))throw Error('That recovery key is incorrect.');
+  const dataKey=new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(record.recoveryKeyIv),additionalData:RECOVERY_WRAP_CONTEXT},recoveryKeys.encryption,base64ToBytes(record.recoveryWrappedKey)));
+  if(dataKey.length!==32)throw Error('The encrypted data key is invalid.');
+  const contentKey=await crypto.subtle.importKey('raw',dataKey,{name:'AES-GCM'},false,['decrypt']);
+  const plaintext=await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(record.iv),additionalData:DATA_CONTEXT},contentKey,base64ToBytes(record.ciphertext));
+  const data=JSON.parse(decoder.decode(plaintext));
+  if(!data||!['mtkTransactions','mtkStock','mtkRepairJobs','mtkDebts'].every(key=>Array.isArray(data[key])))throw Error('The encrypted business records are invalid.');
+  const salt=crypto.getRandomValues(new Uint8Array(16)),passwordKeys=await derivePasswordKeys(newPassword,salt);
+  const credential={version:2,algorithm:'PBKDF2-HMAC-SHA-256',iterations:KDF_ITERATIONS,salt:bytesToBase64(salt),verifier:bytesToBase64(await passwordVerifier(passwordKeys.verifier)),recoverySalt:record.recoverySalt,recoveryVerifier:record.recoveryVerifier};
+  recoveryEnvelope=await persistEncryptedData(data,credential,passwordKeys.encryption,dataKey,recoveryKeys.encryption);
+  removeLegacyData();
+  businessData=data;
+  encryptionKey=passwordKeys.encryption;
+  dataKeyBytes=dataKey;
+  activeCredential=credential;
+  latestSaveFailed=false;
+  $('recoveryMsg').textContent='Password reset. Your saved records are intact.';
+  unlock();
+ }catch(error){console.error('Could not recover the app password.',error);$('recoveryMsg').textContent=error.message||'Could not recover the app. Your encrypted records have not been changed.'}
+ finally{$('recoverPasswordBtn').disabled=false}
+}
+$('recoverPasswordBtn').onclick=recoverPassword;
+async function createOrReplaceRecoveryKey(){
+ if(!businessData||!encryptionKey||!dataKeyBytes||!recoveryEnvelope||!activeCredential){alert('Unlock the app before managing its recovery key.');return}
+ if(activeCredential.recoverySalt&&!confirm('This will replace your existing recovery key. Your old key will stop working. Continue?'))return;
+ $('createRecoveryKeyBtn').disabled=true;
+ try{
+  await saveQueue;
+  if(latestSaveFailed)throw Error('The latest changes could not be saved. Try saving again before replacing the recovery key.');
+  const key=generateRecoveryKey(),salt=crypto.getRandomValues(new Uint8Array(16));
+  const keys=await derivePasswordKeys(key,salt);
+  const credential={...activeCredential,recoverySalt:bytesToBase64(salt),recoveryVerifier:bytesToBase64(await passwordVerifier(keys.verifier,RECOVERY_CONTEXT))};
+  recoveryEnvelope=await persistEncryptedData(businessData,credential,encryptionKey,dataKeyBytes,keys.encryption);
+  activeCredential=credential;
+  showRecoveryKey(key,true);
+ }catch(error){console.error('Could not create a recovery key.',error);alert(error.message||'Could not create a recovery key. Your existing encrypted records are unchanged.')}
+ finally{$('createRecoveryKeyBtn').disabled=false}
+}
+$('createRecoveryKeyBtn').onclick=createOrReplaceRecoveryKey;
 function clearSensitiveDom(){
  for(const id of ['transactionForm','stockForm','repairForm','debtForm'])$(id).reset();
  delete $('txReceipt').dataset.receipt;
@@ -265,6 +448,9 @@ async function lockApp(){
  clearSensitiveDom();
  businessData=null;
  encryptionKey=null;
+ dataKeyBytes?.fill(0);
+ dataKeyBytes=null;
+ recoveryEnvelope=null;
  activeCredential=null;
  showLogin();
  $('loginMsg').textContent='App locked.';
