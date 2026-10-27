@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071521"><meta name="description" content="Manage MTK Mobile Solution income, expenses, stock, repairs and customer balances in one private workspace."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MTK Business"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/jpeg" href="./mtk-logo.jpeg"><title>MTK Private Business Manager</title>
+<style>
+:root{color-scheme:dark;--teal:#25d3e6;--teal-dark:#0da8bd;--dark:#07131d;--panel:#101f2b;--panel-raised:#142735;--line:#263c49;--muted:#a9bac5;--text:#f2f7fa;--success:#68dbac;--danger:#ff8790}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -18%,#173b4b 0,transparent 46%),var(--dark);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+header{padding:22px 18px 17px;text-align:center;background:linear-gradient(180deg,rgba(8,21,31,.94),rgba(8,21,31,.68));border-bottom:1px solid rgba(37,211,230,.38)}
+.brand-logo{display:block;width:min(100%,520px);height:250px;object-fit:cover;object-position:center 51%;margin:0 auto 10px;background:#fff;border:1px solid rgba(255,255,255,.82);border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.24)}
+header p{margin:0;color:#dce7ed;font-size:14px;font-weight:750;letter-spacing:2.2px}
+.slogan{color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2.5px;text-align:center;padding:4px 8px}
+main{max-width:1180px;margin:auto;padding:24px 20px 40px}
+.card{background:linear-gradient(145deg,rgba(20,39,53,.98),rgba(15,30,42,.98));border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:0 12px 32px rgba(0,0,0,.13)}
+h2{font-size:18px;line-height:1.35;margin:0 0 16px;color:#eaf9fc;letter-spacing:.1px}
+h3{font-size:14px;color:#b5eff5;margin:22px 0 10px}
+label{display:block;font-size:12px;font-weight:650;color:#c0cdd5;margin:0 0 6px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #344d5c;border-radius:9px;background:#091722;color:var(--text);transition:border-color .16s,box-shadow .16s}
+input::placeholder,textarea::placeholder{color:#8498a5}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(37,211,230,.15)}
+input[type=checkbox]{width:auto;accent-color:var(--teal)}
+input[type=file]{padding:7px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px}
+.btn{min-height:42px;border:1px solid transparent;border-radius:9px;padding:10px 15px;font-weight:750;cursor:pointer;background:var(--teal);color:#06151d;transition:background .16s,border-color .16s,transform .16s}
+.btn:hover{background:#65e5f1;transform:translateY(-1px)}
+.btn:focus-visible,.tabs button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.btn.alt{background:#172d3a;color:#e5f2f6;border-color:#354c5a}
+.btn.alt:hover{background:#203c4b;border-color:#587181}
+.btn.red{background:#742f3a;color:white}
+.btn.red:hover{background:#913b49}
+.actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:14px}
+.tabs{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;margin:2px 0 16px;padding:3px 2px 9px;scrollbar-color:#385664 transparent}
+.tabs button{flex:0 0 auto;background:#122430;color:#c8d6dd;border:1px solid #2b414e;border-radius:9px;padding:10px 14px;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
+.tabs button:hover{background:#1a3341;border-color:#466575;color:#fff}
+.tabs button.active{background:rgba(37,211,230,.13);color:#81eff7;border-color:rgba(37,211,230,.55);font-weight:800}
+.hidden{display:none!important}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,205px),1fr));gap:12px;margin-top:16px}
+.stat{min-width:0;background:linear-gradient(145deg,#0b1924,#0d1d28);border:1px solid #283f4c;border-radius:12px;padding:16px}
+.stat span{display:block;color:var(--muted);font-size:12px;line-height:1.45}
+.stat strong{display:block;font-size:clamp(20px,3vw,25px);line-height:1.2;margin-top:9px;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.good{color:var(--success)}.bad{color:var(--danger)}
+.hint{font-size:12px;line-height:1.65;color:var(--muted)}
+.row{background:#0b1924;border:1px solid #293e4a;border-radius:11px;padding:14px;margin:10px 0}
+.row strong{color:#8ceaf1}
+.receipt{max-width:180px;max-height:180px;display:block;margin-top:8px;border-radius:8px}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.check{display:flex;align-items:center;gap:8px;background:#0b1924;padding:9px;border:1px solid #294553;border-radius:8px}
+.check label{margin:0;color:#fff;font-size:13px}
+#login{max-width:460px;margin:clamp(24px,6vh,70px) auto;padding:26px}
+#login h2{font-size:21px}
+.warning{border:1px solid rgba(255,189,74,.2);border-left:4px solid #ffbd4a;border-radius:8px;padding:12px 14px;background:rgba(70,49,17,.52);color:#f5e6c6;font-size:12px;line-height:1.65}
+.pill{display:inline-block;font-size:11px;background:#173643;border:1px solid #26505c;border-radius:20px;padding:3px 9px;color:#a6effa}
+@media(max-width:600px){header{padding:18px 14px 14px}.brand-logo{max-width:390px;height:195px}header p{font-size:12px;letter-spacing:1.7px}main{padding:16px 12px 28px}.card{padding:16px;border-radius:13px;margin-bottom:13px}.grid{gap:11px}.tabs{margin-right:-12px;margin-left:-4px;padding-right:12px}.actions .btn{flex:1 1 auto}#login{margin:24px 12px;padding:20px}.stat{padding:13px}}
+@media print{body{background:#fff;color:#111}header{background:#fff;border-color:#bbb}.brand-logo{height:160px}header p,h2,.slogan{color:#075b68}.card{background:#fff;color:#111;border:1px solid #aaa;box-shadow:none}.stat,.row{background:#fff;color:#111;border:1px solid #bbb}.stat span,.hint,label{color:#333}.no-print{display:none!important}input,select,textarea{background:#fff;color:#111}}
+</style></head>
+<body>
+<header><img class="brand-logo" src="./mtk-logo.jpeg" alt="MTK Mobile Solution logo"><p>PRIVATE BUSINESS MANAGER</p><div class="slogan">WE FIX, YOU SMILE</div></header>
+<section id="login" class="card">
+<h2 id="loginTitle">Create your private password</h2>
+<p class="hint">This app is intended for your use only. Set a password to lock the app on this device.</p>
+<div><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="At least 8 characters"></div>
+<div id="confirmWrap" style="margin-top:10px"><label>Confirm password</label><input id="confirmPassword" type="password" autocomplete="new-password"></div>
+<div class="actions"><button class="btn" id="loginBtn">Create password</button></div><p class="hint" id="loginMsg"></p>
+<div class="warning">Privacy note: this first version stores records on this device in the browser. The app password is a local lock, not bank-level encryption. Anyone who can access browser storage or the device may be able to access data. Use a strong phone lock and export secure backups.</div>
+</section>
+<div id="app" class="hidden">
+<main>
+<div class="actions no-print"><button class="btn alt" id="lockBtn">Lock app</button><button class="btn alt" id="exportBtn">Export backup</button><label class="btn alt" style="display:inline-flex;align-items:center;cursor:pointer">Import backup<input id="importFile" type="file" accept=".json,application/json" hidden></label><button class="btn alt" onclick="window.print()">Print current page</button></div>
+<div class="warning">Keep receipts and records private. Do not record bank PINs, passwords, or customers' phone unlock codes. Export a backup regularly and store it somewhere secure.</div>
+<section class="card"><h2>Business overview</h2><div class="grid"><div><label>From date</label><input type="date" id="fromDate"></div><div><label>To date</label><input type="date" id="toDate"></div><div style="align-self:end"><button class="btn" id="filterBtn">Update totals</button></div></div><div class="stats" style="margin-top:12px">
+<div class="stat"><span>Sales / money received</span><strong id="totalIncome">R0.00</strong></div>
+<div class="stat"><span>Expenses / money spent</span><strong id="totalExpense">R0.00</strong></div>
+<div class="stat"><span>Profit / loss (cash view)</span><strong id="net">R0.00</strong></div>
+<div class="stat"><span>Inventory items in stock</span><strong id="stockCount">0</strong></div></div><p class="hint">Cash-view result = money recorded as received minus money recorded as spent for the selected dates. It is not a full accounting/tax statement. Record stock purchases as expenses and sales as income; do not count the same transaction twice.</p></section>
+<div class="tabs no-print"><button class="active" data-tab="transaction">Income & expenses</button><button data-tab="inventory">Accessories & stock</button><button data-tab="history">Transaction history</button><button data-tab="repairs">Repair jobs & customers</button><button data-tab="debts">Debts / unpaid</button><button data-tab="reports">Reports & backup</button></div>
+<section class="card panel" id="panel-transaction"><h2>Add money received or spent</h2><form id="transactionForm"><div class="grid">
+<div><label>Transaction type *</label><select id="txType"><option value="income">Money received / sale</option><option value="expense">Money spent / expense</option></select></div>
+<div><label>Date *</label><input id="txDate" type="date" required></div>
+<div><label>Category *</label><select id="txCategory"><option>Phone repair income</option><option>Phone accessory sale</option><option>Laptop repair income</option><option>Smartwatch sale</option><option>Other sale</option><option>Stock purchase</option><option>Parts for repairs</option><option>Tools / equipment</option><option>Transport</option><option>Data / airtime</option><option>Rent / electricity</option><option>Packaging</option><option>Other expense</option></select></div>
+<div><label>Amount (R) *</label><input id="txAmount" type="number" min="0.01" step=".01" required></div>
+<div><label>Item / description *</label><input id="txDescription" required placeholder="e.g. USB cable, screen repair"></div>
+<div><label>Payment method</label><select id="txPayment"><option>Cash</option><option>EFT / bank transfer</option><option>Card</option><option>Mobile money</option><option>Credit / unpaid</option><option>Other</option></select></div>
+<div><label>Supplier / customer (optional)</label><input id="txPerson"></div>
+<div><label>Quantity (optional)</label><input id="txQty" type="number" min="1" step="1" value="1"></div>
+<div><label>Receipt / slip photo</label><input id="txReceipt" type="file" accept="image/*" capture="environment"></div>
+</div><label style="margin-top:10px">Notes</label><textarea id="txNotes" placeholder="Receipt number, what was purchased, etc."></textarea><div id="receiptPreview"></div><div class="actions"><button class="btn alt" type="button" id="ocrBtn">Read receipt text (internet required)</button><button class="btn alt" type="button" id="copyOcrBtn">Copy receipt text</button></div><textarea id="ocrText" placeholder="Receipt text will appear here for you to check and copy. OCR may make mistakes."></textarea><div class="actions"><button class="btn" type="submit">Save transaction</button><button class="btn alt" type="reset">Clear form</button></div></form><p class="hint">Use the receipt photo field to take a picture with your phone camera or choose an existing slip image. Check the amount and date yourself; this version does not automatically read receipt text.</p></section>
+<section class="card panel hidden" id="panel-inventory"><h2>Accessories, devices & stock</h2><form id="stockForm"><div class="grid">
+<div><label>Item name *</label><input id="stName" required placeholder="USB cable, smartwatch, laptop"></div>
+<div><label>Category</label><select id="stCategory"><option>Phone accessory</option><option>Phone</option><option>Smartwatch</option><option>Laptop</option><option>Tablet</option><option>Computer accessory</option><option>Repair part</option><option>Tool / equipment</option><option>Other</option></select></div>
+<div><label>Quantity in stock *</label><input id="stQty" type="number" min="0" step="1" required value="1"></div>
+<div><label>Cost per item (R) *</label><input id="stCost" type="number" min="0" step=".01" required></div>
+<div><label>Selling price per item (R)</label><input id="stPrice" type="number" min="0" step=".01"></div>
+<div><label>Supplier</label><input id="stSupplier"></div>
+<div><label>Purchase date</label><input id="stDate" type="date"></div><div><label>Stock notes / receipt reference</label><input id="stNotes"></div>
+</div><div class="actions"><button class="btn" type="submit">Save stock item</button></div></form><h3>Low-stock alerts</h3><div id="lowStockList"></div><h3>Stock list</h3><div id="stockList"></div><p class="hint">This is a basic stock register. When you buy stock, also record the expense and attach the slip. When you sell an item, record the income and update stock quantity manually.</p></section>
+<section class="card panel hidden" id="panel-history"><h2>Transaction history</h2><div class="grid"><div><label>Search description / supplier / category</label><input id="searchHistory" placeholder="Search..."></div><div><label>Show type</label><select id="historyType"><option value="all">All</option><option value="income">Income only</option><option value="expense">Expenses only</option></select></div></div><div id="historyList"></div></section>
+<section class="card panel hidden" id="panel-repairs"><h2>Repair jobs & customer history</h2>
+<p class="hint">Record a repair job and customer, then record the money received separately in Income & Expenses so the dashboard totals remain correct.</p>
+<form id="repairForm"><div class="grid">
+<div><label>Repair ticket number *</label><input id="rpTicket" required placeholder="MTK-0001"></div>
+<div><label>Date received *</label><input id="rpDate" type="date" required></div>
+<div><label>Customer name *</label><input id="rpCustomer" required></div>
+<div><label>Customer phone</label><input id="rpPhone" type="tel"></div>
+<div><label>Device / model *</label><input id="rpDevice" required placeholder="Samsung A12, HP laptop"></div>
+<div><label>IMEI / serial (optional)</label><input id="rpSerial"></div>
+<div><label>Customer-reported problem *</label><input id="rpComplaint" required></div>
+<div><label>Initial test / condition</label><input id="rpInitial" placeholder="Screen cracked, no charging..."></div>
+<div><label>Repair service / work done</label><input id="rpWork"></div>
+<div><label>Repair status</label><select id="rpStatus"><option>Received - not tested</option><option>Diagnosing</option><option>Waiting for approval</option><option>Waiting for parts</option><option>In repair</option><option>Repaired - tested</option><option>Partially repaired</option><option>Unrepairable</option><option>Collected</option></select></div>
+<div><label>Quoted price (R)</label><input id="rpQuote" type="number" min="0" step=".01"></div>
+<div><label>Warranty days (if offered)</label><input id="rpWarranty" type="number" min="0" step="1" value="0"></div>
+</div><label style="margin-top:10px">Final test / faults still present</label><textarea id="rpFinal"></textarea>
+<div class="actions"><button class="btn" type="submit">Save repair job</button></div></form><h3>Repair job history</h3><div id="repairList"></div></section>
+<section class="card panel hidden" id="panel-debts"><h2>Customer balances / unpaid amounts</h2>
+<p class="hint">Use this for customer credit or money still owed. Add payments as separate income transactions when received. This list does not automatically add income to the dashboard.</p>
+<form id="debtForm"><div class="grid">
+<div><label>Customer name *</label><input id="dbCustomer" required></div>
+<div><label>Phone number</label><input id="dbPhone"></div>
+<div><label>Ticket / invoice reference</label><input id="dbRef"></div>
+<div><label>Date</label><input id="dbDate" type="date" required></div>
+<div><label>Total amount due (R) *</label><input id="dbTotal" type="number" min="0" step=".01" required></div>
+<div><label>Amount paid so far (R)</label><input id="dbPaid" type="number" min="0" step=".01" value="0"></div>
+<div><label>Due date</label><input id="dbDue" type="date"></div>
+</div><label style="margin-top:10px">Notes</label><textarea id="dbNotes"></textarea><div class="actions"><button class="btn" type="submit">Save balance</button></div></form>
+<h3>Outstanding balances</h3><div id="debtList"></div></section>
+<section class="card panel hidden" id="panel-reports"><h2>Reports & backup</h2><p>Export a JSON backup to keep your transactions, stock list, and receipt photos together. Store the backup securely.</p><div class="actions"><button class="btn" id="exportBtn2">Export full backup</button><label class="btn alt" style="display:inline-flex;align-items:center;cursor:pointer">Import backup<input id="importFile2" type="file" accept=".json,application/json" hidden></label></div><h3>Selected period totals</h3><div id="reportSummary"></div><h3>Business record checklist</h3><ul class="hint"><li>Keep supplier slips for accessories and repair parts.</li><li>Record sales and repair payments on the date received.</li><li>Keep personal spending separate from business spending.</li><li>Count stock regularly and correct quantities.</li><li>Back up data after entering new transactions.</li></ul></section>
+<div class="slogan">WE FIX, YOU SMILE</div>
+</main></div>
+<script>
+const $=id=>document.getElementById(id);
+const today=()=>new Date().toISOString().slice(0,10);
+$('txDate').value=today();$('stDate').value=today();$('fromDate').value=new Date(new Date().getFullYear(),new Date().getMonth(),1).toISOString().slice(0,10);$('toDate').value=today();
+const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+async function hash(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function passwordExists(){return !!localStorage.getItem('mtkPassHash')}
+function showLogin(){ $('app').classList.add('hidden');$('login').classList.remove('hidden');$('confirmWrap').classList.toggle('hidden',passwordExists());$('loginTitle').textContent=passwordExists()?'Unlock MTK Private Business Manager':'Create your private password';$('loginBtn').textContent=passwordExists()?'Unlock':'Create password'}
+$('loginBtn').onclick=async()=>{let p=$('password').value;if(p.length<8){$('loginMsg').textContent='Use at least 8 characters.';return}if(passwordExists()){if(await hash(p)===localStorage.getItem('mtkPassHash'))unlock();else $('loginMsg').textContent='Incorrect password. Try again.'}else{if(p!==$('confirmPassword').value){$('loginMsg').textContent='Passwords do not match.';return}localStorage.setItem('mtkPassHash',await hash(p));unlock()}};
+function unlock(){$('login').classList.add('hidden');$('app').classList.remove('hidden');$('password').value='';$('confirmPassword').value='';renderAll()}
+$('lockBtn').onclick=()=>{showLogin();$('loginMsg').textContent='App locked.'};
+if(!passwordExists())showLogin();
+$('txReceipt').addEventListener('change',async()=>{const f=$('txReceipt').files[0];if(!f){$('receiptPreview').innerHTML='';return}try{const data=await compressImage(f);$('receiptPreview').innerHTML=`<img class="receipt" alt="Receipt preview" src="${data}"><p class="hint">Receipt photo ready to save.</p>`;$('txReceipt').dataset.receipt=data}catch(e){$('receiptPreview').textContent='Could not read image. Try another photo.'}});
+function compressImage(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onerror=reject;r.onload=()=>{const im=new Image();im.onerror=reject;im.onload=()=>{let scale=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*scale);c.height=Math.round(im.height*scale);c.getContext('2d').drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.72))};im.src=r.result};r.readAsDataURL(file)})}
+$('transactionForm').onsubmit=e=>{e.preventDefault();const a=Number($('txAmount').value);if(a<=0)return alert('Enter an amount greater than zero.');let tx=read('mtkTransactions',[]);tx.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),type:$('txType').value,date:$('txDate').value,category:$('txCategory').value,amount:a,description:$('txDescription').value,payment:$('txPayment').value,person:$('txPerson').value,qty:Number($('txQty').value||1),notes:$('txNotes').value,receipt:$('txReceipt').dataset.receipt||'',created:new Date().toISOString()});try{write('mtkTransactions',tx)}catch(err){alert('Storage is full. Export a backup and remove some large receipt photos.');return}e.target.reset();$('txDate').value=today();$('txQty').value=1;delete $('txReceipt').dataset.receipt;$('receiptPreview').innerHTML='';renderAll();alert('Transaction saved on this device.')};
+$('stockForm').onsubmit=e=>{e.preventDefault();let s=read('mtkStock',[]);s.push({id:Date.now(),name:$('stName').value,category:$('stCategory').value,qty:Number($('stQty').value),cost:Number($('stCost').value),price:Number($('stPrice').value||0),supplier:$('stSupplier').value,date:$('stDate').value,notes:$('stNotes').value});write('mtkStock',s);e.target.reset();$('stQty').value=1;$('stDate').value=today();renderAll();alert('Stock item saved.')};
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('hidden',x.id!=='panel-'+b.dataset.tab));if(b.dataset.tab==='history')renderHistory();if(b.dataset.tab==='inventory')renderStock();if(b.dataset.tab==='reports')renderReport()});
+function money(n){return 'R'+Number(n||0).toLocaleString('en-ZA',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function selected(){let f=$('fromDate').value,t=$('toDate').value;return read('mtkTransactions',[]).filter(x=>(!f||x.date>=f)&&(!t||x.date<=t))}
+function renderStats(){let tx=selected(),inc=tx.filter(x=>x.type==='income').reduce((s,x)=>s+x.amount,0),exp=tx.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0);$('totalIncome').textContent=money(inc);$('totalExpense').textContent=money(exp);$('net').textContent=money(inc-exp);$('net').className=inc-exp<0?'bad':'';$('stockCount').textContent=read('mtkStock',[]).reduce((s,x)=>s+x.qty,0)}
+function renderStock(){let s=read('mtkStock',[]);$('stockList').innerHTML=s.length?s.map(x=>`<div class="row"><strong>${esc(x.name)}</strong> <span class="pill">${esc(x.category)}</span><div>Qty: ${x.qty} · Cost/item: ${money(x.cost)} · Sell/item: ${money(x.price)} · Stock cost: ${money(x.qty*x.cost)}</div><div class="hint">Supplier: ${esc(x.supplier)} · ${esc(x.date)} · ${esc(x.notes)}</div><div class="actions no-print"><button class="btn alt" onclick="changeQty(${x.id},-1)">−1 sold/used</button><button class="btn alt" onclick="changeQty(${x.id},1)">+1 stock</button><button class="btn red" onclick="deleteStock(${x.id})">Delete</button></div></div>`).join(''):'<p class="hint">No stock items added yet.</p>'}
+window.changeQty=(id,d)=>{let s=read('mtkStock',[]),x=s.find(a=>a.id===id);if(x){x.qty=Math.max(0,x.qty+d);write('mtkStock',s);renderAll()}};window.deleteStock=id=>{if(confirm('Delete this stock item?')){write('mtkStock',read('mtkStock',[]).filter(x=>x.id!==id));renderAll()}};
+function renderHistory(){let q=$('searchHistory').value.toLowerCase(),typ=$('historyType').value;let tx=selected().filter(x=>(typ==='all'||x.type===typ)&&[x.description,x.category,x.person,x.notes].join(' ').toLowerCase().includes(q)).slice().reverse();$('historyList').innerHTML=tx.length?tx.map(x=>`<div class="row"><strong>${esc(x.date)} · ${esc(x.description)}</strong><div>${x.type==='income'?'Money received':'Money spent'}: <b>${money(x.amount)}</b> · ${esc(x.category)} · ${esc(x.payment)}</div><div class="hint">${esc(x.person)} · Qty ${x.qty} · ${esc(x.notes)}</div>${x.receipt?`<img class="receipt" src="${x.receipt}" alt="Receipt slip">`:''}<div class="actions no-print"><button class="btn red" onclick="deleteTx('${x.id}')">Delete record</button></div></div>`).join(''):'<p class="hint">No matching transactions for this date range.</p>'}
+window.deleteTx=id=>{if(confirm('Delete this transaction and its receipt photo?')){write('mtkTransactions',read('mtkTransactions',[]).filter(x=>x.id!==id));renderAll()}};
+function renderReport(){let tx=selected(),inc=tx.filter(x=>x.type==='income').reduce((s,x)=>s+x.amount,0),exp=tx.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0);$('reportSummary').innerHTML=`<div class="stats"><div class="stat"><span>Transactions</span><strong>${tx.length}</strong></div><div class="stat"><span>Income</span><strong>${money(inc)}</strong></div><div class="stat"><span>Expenses</span><strong>${money(exp)}</strong></div><div class="stat"><span>Net cash gain / loss</span><strong>${money(inc-exp)}</strong></div></div>`}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderAll(){renderStats();renderStock();renderHistory();renderReport()}
+$('filterBtn').onclick=renderAll;$('searchHistory').oninput=renderHistory;$('historyType').onchange=renderHistory;
+function exportBackup(){let data={app:'MTK Private Business Manager',version:1,exported:new Date().toISOString(),transactions:read('mtkTransactions',[]),stock:read('mtkStock',[]),repairJobs:read('mtkRepairJobs',[]),debts:read('mtkDebts',[])};let b=new Blob([JSON.stringify(data)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='mtk-business-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+$('exportBtn').onclick=exportBackup;$('exportBtn2').onclick=exportBackup;
+async function importBackup(file){try{let d=JSON.parse(await file.text());if(!Array.isArray(d.transactions)||!Array.isArray(d.stock))throw Error('Invalid backup');if(!confirm('Import backup and replace the current transaction and stock lists? Export current data first if you need it.'))return;write('mtkTransactions',d.transactions);write('mtkStock',d.stock);write('mtkRepairJobs',d.repairJobs||[]);write('mtkDebts',d.debts||[]);renderAll();alert('Backup imported.')}catch(e){alert('Could not import this backup file.')}} 
+$('importFile').onchange=e=>e.target.files[0]&&importBackup(e.target.files[0]);$('importFile2').onchange=e=>e.target.files[0]&&importBackup(e.target.files[0]);
+
+// Extra business-management features: receipt OCR, repair jobs, customer balances, low-stock alerts.
+$('rpDate').value=today(); $('dbDate').value=today();
+$('ocrBtn').onclick=async()=>{
+ const f=$('txReceipt').files[0];
+ if(!f){alert('Take or choose a receipt photo first.');return}
+ $('ocrText').value='Loading receipt-reading tool...';
+ try{
+  if(!window.Tesseract){await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})}
+  $('ocrText').value='Reading image... please wait.';
+  const result=await Tesseract.recognize(f,'eng',{logger:m=>{if(m.status)$('ocrText').value=m.status+(m.progress?' '+Math.round(m.progress*100)+'%':'')}});
+  $('ocrText').value=result.data.text||'No text detected. Try a clearer, brighter picture.';
+  const text=$('ocrText').value;
+  // Suggest a likely amount; user must verify it before saving.
+  const matches=[...text.matchAll(/(?:R\s*)?\b(\d{1,5}[.,]\d{2})\b/g)].map(m=>Number(m[1].replace(',','.'))).filter(n=>Number.isFinite(n));
+  if(matches.length && confirm('Possible amounts found: '+matches.map(m=>'R'+m.toFixed(2)).join(', ')+'. Fill the amount with the last detected amount? Please verify it.')) $('txAmount').value=matches[matches.length-1].toFixed(2);
+ }catch(e){$('ocrText').value='Receipt reading failed. Check your internet connection, then try again. You can still type the details manually.'}
+};
+$('copyOcrBtn').onclick=async()=>{try{await navigator.clipboard.writeText($('ocrText').value);alert('Receipt text copied.')}catch(e){$('ocrText').select();document.execCommand('copy');alert('Select and copy the receipt text if copying did not work.')}};
+
+$('repairForm').onsubmit=e=>{
+ e.preventDefault();let arr=read('mtkRepairJobs',[]);
+ const x={id:Date.now(),ticket:$('rpTicket').value,date:$('rpDate').value,customer:$('rpCustomer').value,phone:$('rpPhone').value,device:$('rpDevice').value,serial:$('rpSerial').value,complaint:$('rpComplaint').value,initial:$('rpInitial').value,work:$('rpWork').value,status:$('rpStatus').value,quote:Number($('rpQuote').value||0),warranty:Number($('rpWarranty').value||0),final:$('rpFinal').value};
+ const i=arr.findIndex(a=>a.ticket.toLowerCase()===x.ticket.toLowerCase());
+ if(i>=0){if(!confirm('Ticket already exists. Update it?'))return; x.id=arr[i].id;arr[i]=x}else arr.push(x);
+ write('mtkRepairJobs',arr);renderAll();alert('Repair job saved.');
+};
+function renderRepairs(){const a=read('mtkRepairJobs',[]).slice().reverse();$('repairList').innerHTML=a.length?a.map(x=>`<div class="row"><strong>${esc(x.ticket)} · ${esc(x.customer)}</strong> <span class="pill">${esc(x.status)}</span><div>${esc(x.device)} · Received ${esc(x.date)} · Quote ${money(x.quote)}</div><div class="hint">Phone: ${esc(x.phone)} · Serial: ${esc(x.serial)}<br>Reported: ${esc(x.complaint)}<br>Initial condition: ${esc(x.initial)}<br>Work: ${esc(x.work)}<br>Final test: ${esc(x.final)}<br>Warranty: ${x.warranty} days (if offered)</div><div class="actions no-print"><button class="btn alt" onclick="editRepair(${x.id})">Edit status/details</button><button class="btn red" onclick="deleteRepair(${x.id})">Delete</button></div></div>`).join(''):'<p class="hint">No repair jobs recorded yet.</p>'}
+window.editRepair=id=>{let x=read('mtkRepairJobs',[]).find(a=>a.id===id);if(!x)return;[['rpTicket','ticket'],['rpDate','date'],['rpCustomer','customer'],['rpPhone','phone'],['rpDevice','device'],['rpSerial','serial'],['rpComplaint','complaint'],['rpInitial','initial'],['rpWork','work'],['rpStatus','status'],['rpQuote','quote'],['rpWarranty','warranty'],['rpFinal','final']].forEach(([a,b])=>$(a).value=x[b]??'');document.querySelector('[data-tab="repairs"]').click();window.scrollTo({top:0,behavior:'smooth'})};
+window.deleteRepair=id=>{if(confirm('Delete this repair job?')){write('mtkRepairJobs',read('mtkRepairJobs',[]).filter(x=>x.id!==id));renderAll()}};
+$('debtForm').onsubmit=e=>{e.preventDefault();let arr=read('mtkDebts',[]);arr.push({id:Date.now(),customer:$('dbCustomer').value,phone:$('dbPhone').value,ref:$('dbRef').value,date:$('dbDate').value,total:Number($('dbTotal').value),paid:Number($('dbPaid').value||0),due:$('dbDue').value,notes:$('dbNotes').value});write('mtkDebts',arr);e.target.reset();$('dbDate').value=today();$('dbPaid').value=0;renderAll();alert('Balance saved.')};
+function renderDebts(){let a=read('mtkDebts',[]).slice().reverse();$('debtList').innerHTML=a.length?a.map(x=>{let bal=Math.max(0,x.total-x.paid);return `<div class="row"><strong>${esc(x.customer)} · Balance ${money(bal)}</strong><div>Invoice/ticket: ${esc(x.ref)} · Total ${money(x.total)} · Paid ${money(x.paid)}</div><div class="hint">Phone: ${esc(x.phone)} · Date: ${esc(x.date)} · Due: ${esc(x.due)} · ${esc(x.notes)}</div><div class="actions no-print"><button class="btn alt" onclick="addDebtPayment(${x.id})">Record payment</button><button class="btn red" onclick="deleteDebt(${x.id})">Delete</button></div></div>`}).join(''):'<p class="hint">No balances recorded.</p>'}
+window.addDebtPayment=id=>{let a=read('mtkDebts',[]),x=a.find(v=>v.id===id);if(!x)return;let p=Number(prompt('How much did the customer pay now? (R)','0'));if(!p||p<=0)return;x.paid=Math.min(x.total,x.paid+p);write('mtkDebts',a);let tx=read('mtkTransactions',[]);tx.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),type:'income',date:today(),category:'Customer debt payment',amount:p,description:'Payment from '+x.customer+' ('+(x.ref||'no reference')+')',payment:'Cash / check notes',person:x.customer,qty:1,notes:'Recorded from balance tracker; receipt not attached',receipt:'',created:new Date().toISOString()});write('mtkTransactions',tx);renderAll();alert('Payment recorded and added to income. Make sure the payment is real and the amount is correct.')};
+window.deleteDebt=id=>{if(confirm('Delete this balance record?')){write('mtkDebts',read('mtkDebts',[]).filter(x=>x.id!==id));renderAll()}};
+if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('./sw.js').catch(e=>console.error('Could not register the offline app worker.',e));
+function renderLowStock(){let s=read('mtkStock',[]).filter(x=>x.qty<=2);$('lowStockList').innerHTML=s.length?s.map(x=>`<div class="row"><strong>${esc(x.name)}</strong> — only ${x.qty} left <span class="pill">${esc(x.category)}</span></div>`).join(''):'<p class="hint">No items at or below 2 units.</p>'}
+const oldRenderAll=renderAll;
+renderAll=function(){oldRenderAll();renderRepairs();renderDebts();renderLowStock()};
+
+</script></body></html>
