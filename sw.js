@@ -1,5 +1,5 @@
-const CACHE='mtk-business-v6';
-const APP_SHELL=['./','./index.html','./manifest.webmanifest','./mtk-logo.jpeg'];
+const CACHE='mtk-business-v7';
+const APP_SHELL=['./','./index.html?v=sky-blue-1','./manifest.webmanifest?v=sky-blue-1','./mtk-logo.jpeg'];
 
 function cacheResponse(request,response,label){
  if(!response.ok||response.type!=='basic')return Promise.resolve(response);
