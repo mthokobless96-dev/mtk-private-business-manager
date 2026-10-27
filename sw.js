@@ -1,5 +1,5 @@
-const CACHE='mtk-business-v9';
-const APP_SHELL=['./','./index.html?v=themes-recovery-1','./manifest.webmanifest?v=themes-recovery-1','./mtk-logo.jpeg','./mtk-icon-192.png','./mtk-icon-512.png'];
+const CACHE='mtk-business-v10';
+const APP_SHELL=['./','./index.html?v=customer-pdf-1','./manifest.webmanifest?v=customer-pdf-1','./mtk-logo.jpeg','./mtk-icon-192.png','./mtk-icon-512.png'];
 
 function cacheResponse(request,response,label){
  if(!response.ok||response.type!=='basic')return Promise.resolve(response);

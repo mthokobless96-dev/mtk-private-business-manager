@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#38bdf8"><meta name="description" content="Manage MTK Mobile Solution income, expenses, stock, repairs and customer balances in one private workspace."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MTK Business"><link rel="manifest" href="./manifest.webmanifest?v=themes-recovery-1"><link rel="apple-touch-icon" href="./mtk-icon-192.png"><link rel="icon" type="image/jpeg" href="./mtk-logo.jpeg"><title>MTK Private Business Manager</title>
+<meta name="theme-color" content="#38bdf8"><meta name="description" content="Manage MTK Mobile Solution income, expenses, stock, repairs and customer balances in one private workspace."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MTK Business"><link rel="manifest" href="./manifest.webmanifest?v=customer-pdf-1"><link rel="apple-touch-icon" href="./mtk-icon-192.png"><link rel="icon" type="image/jpeg" href="./mtk-logo.jpeg"><title>MTK Private Business Manager</title>
 <style>
 :root{color-scheme:light;--sky:#38bdf8;--sky-dark:#0284c7;--sky-soft:#e0f2fe;--dark:#eff8ff;--panel:#fff;--panel-raised:#f7fbff;--line:#cfe6f5;--muted:#506b7e;--text:#17364b;--success:#16835d;--danger:#c5394b}
 *{box-sizing:border-box}
@@ -49,6 +49,24 @@ input[type=file]{padding:7px}
 .row{background:#f4faff;border:1px solid #d3e8f5;border-radius:11px;padding:14px;margin:10px 0}
 .row strong{color:#0878b5}
 .receipt{max-width:180px;max-height:180px;display:block;margin-top:8px;border-radius:8px}
+.repair-condition-photo{display:block;max-width:min(100%,360px);max-height:320px;margin-top:10px;border-radius:8px;object-fit:contain}
+.print-only{display:none}
+.customer-print{max-width:760px;margin:0 auto;padding:30px;color:#17364b;font:14px/1.55 Arial,sans-serif}
+.customer-print-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:18px;border-bottom:2px solid #38bdf8}
+.customer-print-logo{display:block;width:190px;height:92px;object-fit:contain;object-position:left center}
+.customer-print-header h1{margin:0;color:#075b91;font-size:23px}
+.customer-print-header p{margin:4px 0 0;color:#506b7e}
+.customer-print-title{margin:24px 0 14px;color:#075b91;font-size:20px}
+.customer-print-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 24px}
+.customer-print-field{padding:10px 0;border-bottom:1px solid #d5e5ee;overflow-wrap:anywhere}
+.customer-print-field span{display:block;margin-bottom:3px;color:#506b7e;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.customer-print-field strong{font-size:14px}
+.customer-print-total{margin-top:24px;padding:17px;border:1px solid #b7ddf4;border-radius:9px;background:#eff8ff}
+.customer-print-total span{display:block;color:#456277;font-size:12px}
+.customer-print-total strong{display:block;margin-top:4px;color:#075b91;font-size:25px}
+.customer-print-notes{margin-top:22px;padding-top:12px;border-top:1px solid #d5e5ee;white-space:pre-wrap;overflow-wrap:anywhere}
+.customer-print-receipt{display:block;max-width:100%;max-height:320px;margin:18px auto 0;object-fit:contain}
+.customer-print-footer{margin-top:28px;padding-top:12px;border-top:1px solid #d5e5ee;color:#506b7e;font-size:11px}
 .checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
 .check{display:flex;align-items:center;gap:8px;background:#f4faff;padding:9px;border:1px solid #d3e8f5;border-radius:8px}
 .check label{margin:0;color:#244b65;font-size:13px}
@@ -57,7 +75,7 @@ input[type=file]{padding:7px}
 .warning{border:1px solid #f1dfb8;border-left:4px solid #d89213;border-radius:8px;padding:12px 14px;background:#fff8e9;color:#624a20;font-size:12px;line-height:1.65}
 .pill{display:inline-block;font-size:11px;background:#e2f4ff;border:1px solid #c1e5f9;border-radius:20px;padding:3px 9px;color:#17608c}
 @media(max-width:600px){header{padding:18px 14px 14px}.brand-logo{max-width:390px;height:195px}header p{font-size:12px;letter-spacing:1.7px}.connection-status{margin:10px 12px 0}main{padding:16px 12px 28px}.card{padding:16px;border-radius:13px;margin-bottom:13px}.grid{gap:11px}.tabs{margin-right:-12px;margin-left:-4px;padding-right:12px}.actions .btn{flex:1 1 auto}#login{margin:24px 12px;padding:20px}.stat{padding:13px}}
-@media print{body{background:#fff;color:#111}header{background:#eff8ff;border-color:#b7ddf4}.brand-logo{height:160px}header p,h2,.slogan{color:#075b91}.card{background:#fff;color:#111;border:1px solid #aaa;box-shadow:none}.stat,.row{background:#fff;color:#111;border:1px solid #bbb}.stat span,.hint,label{color:#333}.no-print{display:none!important}input,select,textarea{background:#fff;color:#111}}
+@media print{@page{margin:14mm}body{background:#fff!important;color:#111!important}header{background:#eff8ff;border-color:#b7ddf4}.brand-logo{width:min(100%,360px);height:auto;max-height:120px;object-fit:contain}header p,h2,.slogan{color:#075b91}.card{background:#fff;color:#111;border:1px solid #aaa;box-shadow:none}.stat,.row{background:#fff;color:#111;border:1px solid #bbb}.stat span,.hint,label{color:#333}.no-print{display:none!important}input,select,textarea{background:#fff;color:#111}body.printing-customer>header{display:none!important}body.printing-customer #app>main{display:none!important}body.printing-customer #customerPrintSheet{display:block!important;max-width:none;margin:0;padding:0}.customer-print{max-width:none;padding:0}.customer-print-total{background:#eff8ff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 body[data-theme="teal"]{background:radial-gradient(ellipse at 50% -18%,#c9f1ee 0,transparent 52%),#effaf9;color:#164b4a}
 body[data-theme="teal"] header{background:linear-gradient(180deg,rgba(220,247,244,.97),rgba(239,250,249,.9));border-color:#b8e4df}
 body[data-theme="teal"] header p,body[data-theme="teal"] h2,body[data-theme="teal"] .row strong{color:#145c58}
@@ -119,7 +137,7 @@ body[data-theme="dark"] .recovery-dialog{background:#1b2b39;border-color:#354f62
 </section>
 <div id="app" class="hidden">
 <main>
-<div class="actions no-print"><button class="btn alt" id="lockBtn">Lock app</button><button class="btn alt" id="exportBtn">Export backup</button><label class="btn alt" style="display:inline-flex;align-items:center;cursor:pointer">Import backup<input id="importFile" type="file" accept=".json,application/json" hidden></label><button class="btn alt" onclick="window.print()">Print current page</button></div>
+<div class="actions no-print"><button class="btn alt" id="lockBtn">Lock app</button><button class="btn alt" id="exportBtn">Export backup</button><label class="btn alt" style="display:inline-flex;align-items:center;cursor:pointer">Import backup<input id="importFile" type="file" accept=".json,application/json" hidden></label><button class="btn alt" onclick="window.print()">Print / save page as PDF</button></div>
 <section class="card"><h2>Business overview</h2><div class="grid"><div><label>From date</label><input type="date" id="fromDate"></div><div><label>To date</label><input type="date" id="toDate"></div><div style="align-self:end"><button class="btn" id="filterBtn">Update totals</button></div></div><div class="stats" style="margin-top:12px">
 <div class="stat"><span>Sales / money received</span><strong id="totalIncome">R0.00</strong></div>
 <div class="stat"><span>Expenses / money spent</span><strong id="totalExpense">R0.00</strong></div>
@@ -162,6 +180,7 @@ body[data-theme="dark"] .recovery-dialog{background:#1b2b39;border-color:#354f62
 <div><label>Repair status</label><select id="rpStatus"><option>Received - not tested</option><option>Diagnosing</option><option>Waiting for approval</option><option>Waiting for parts</option><option>In repair</option><option>Repaired - tested</option><option>Partially repaired</option><option>Unrepairable</option><option>Collected</option></select></div>
 <div><label>Quoted price (R)</label><input id="rpQuote" type="number" min="0" step=".01"></div>
 <div><label>Warranty days (if offered)</label><input id="rpWarranty" type="number" min="0" step="1" value="0"></div>
+<div><label>Phone condition photo</label><input id="rpConditionPhoto" type="file" accept="image/*" capture="environment"><div id="rpConditionPhotoPreview"></div></div>
 </div><label style="margin-top:10px">Final test / faults still present</label><textarea id="rpFinal"></textarea>
 <div class="actions"><button class="btn" type="submit">Save repair job</button></div></form><h3>Repair job history</h3><div id="repairList"></div></section>
 <section class="card panel hidden" id="panel-debts"><h2>Customer balances / unpaid amounts</h2>
@@ -179,7 +198,7 @@ body[data-theme="dark"] .recovery-dialog{background:#1b2b39;border-color:#354f62
 <section class="card panel hidden" id="panel-reports"><h2>Reports & backup</h2><p>Export a JSON backup to keep your transactions, stock list, and receipt photos together. Backup files are not encrypted; store them securely.</p><div class="actions"><button class="btn" id="exportBtn2">Export full backup</button><label class="btn alt" style="display:inline-flex;align-items:center;cursor:pointer">Import backup<input id="importFile2" type="file" accept=".json,application/json" hidden></label></div><h3>Selected period totals</h3><div id="reportSummary"></div><h3>Business record checklist</h3><ul class="hint"><li>Keep supplier slips for accessories and repair parts.</li><li>Record sales and repair payments on the date received.</li><li>Keep personal spending separate from business spending.</li><li>Count stock regularly and correct quantities.</li><li>Back up data after entering new transactions.</li></ul></section>
 <section class="card panel hidden" id="panel-settings"><h2>App settings</h2><label for="themeSelect">App theme</label><select id="themeSelect"><option value="sky">Sky blue</option><option value="teal">Teal</option><option value="dark">Dark</option></select><p class="hint">Your theme choice is saved on this device and stays selected when you reopen the app.</p><h3>Password recovery</h3><p class="hint">Create a recovery key before you forget your password. Store it somewhere safe outside this app. Anyone with this key can reset your password and read this device's business records. Creating a new key replaces the previous one.</p><div class="actions"><button class="btn alt" id="createRecoveryKeyBtn" type="button">Create / replace recovery key</button></div><p class="hint">Recovery works only on this device while its encrypted records are still available. It cannot reset a password remotely or recover cleared browser storage.</p></section>
 <div class="slogan">WE FIX, YOU SMILE</div>
-</main></div>
+</main><section id="customerPrintSheet" class="print-only" aria-live="polite"></section></div>
 <div id="recoveryKeyOverlay" class="recovery-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="recoveryKeyTitle"><section class="recovery-dialog card"><h2 id="recoveryKeyTitle">Save your recovery key</h2><p id="recoveryKeyIntro" class="hint">This key is shown once. Save it somewhere private outside this device. Anyone with the key can reset your password and access your encrypted records.</p><div id="recoveryKeyValue" class="recovery-key row"></div><div class="actions"><button class="btn alt" id="copyRecoveryKeyBtn" type="button">Copy recovery key</button><button class="btn alt" id="downloadRecoveryKeyBtn" type="button">Download recovery key</button></div><label class="check" style="margin-top:14px"><input id="recoveryKeySaved" type="checkbox"> I saved this key somewhere safe</label><div class="actions"><button class="btn" id="finishRecoveryKeyBtn" type="button" disabled>Continue</button></div></section></div>
 <script>
 const $=id=>document.getElementById(id);
@@ -434,7 +453,9 @@ $('createRecoveryKeyBtn').onclick=createOrReplaceRecoveryKey;
 function clearSensitiveDom(){
  for(const id of ['transactionForm','stockForm','repairForm','debtForm'])$(id).reset();
  delete $('txReceipt').dataset.receipt;
+ delete $('rpConditionPhoto').dataset.photo;
  $('receiptPreview').textContent='';
+ $('rpConditionPhotoPreview').textContent='';
  $('ocrText').value='';
  for(const id of ['historyList','stockList','repairList','debtList','lowStockList','reportSummary'])$(id).textContent='';
  for(const id of ['totalIncome','totalExpense','net'])$(id).textContent='R0.00';
@@ -456,6 +477,7 @@ async function lockApp(){
 $('lockBtn').onclick=lockApp;
 showLogin();
 $('txReceipt').addEventListener('change',async()=>{const f=$('txReceipt').files[0];if(!f){$('receiptPreview').innerHTML='';return}try{const data=await compressImage(f);$('receiptPreview').innerHTML=`<img class="receipt" alt="Receipt preview" src="${data}"><p class="hint">Receipt photo ready to save.</p>`;$('txReceipt').dataset.receipt=data}catch(e){$('receiptPreview').textContent='Could not read image. Try another photo.'}});
+$('rpConditionPhoto').addEventListener('change',async()=>{const f=$('rpConditionPhoto').files[0];if(!f)return;try{const data=await compressImage(f);$('rpConditionPhotoPreview').innerHTML=`<img class="repair-condition-photo" alt="Phone condition preview" src="${data}"><p class="hint">Condition photo ready to save.</p>`;$('rpConditionPhoto').dataset.photo=data}catch(e){$('rpConditionPhotoPreview').textContent='Could not read image. Try another photo.'}});
 function compressImage(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onerror=reject;r.onload=()=>{const im=new Image();im.onerror=reject;im.onload=()=>{let scale=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*scale);c.height=Math.round(im.height*scale);c.getContext('2d').drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.72))};im.src=r.result};r.readAsDataURL(file)})}
 $('transactionForm').onsubmit=async e=>{e.preventDefault();const a=Number($('txAmount').value);if(a<=0)return alert('Enter an amount greater than zero.');let tx=read('mtkTransactions',[]);tx.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),type:$('txType').value,date:$('txDate').value,category:$('txCategory').value,amount:a,description:$('txDescription').value,payment:$('txPayment').value,person:$('txPerson').value,qty:Number($('txQty').value||1),notes:$('txNotes').value,receipt:$('txReceipt').dataset.receipt||'',created:new Date().toISOString()});if(!await saveData({mtkTransactions:tx}))return;e.target.reset();$('txDate').value=today();$('txQty').value=1;delete $('txReceipt').dataset.receipt;$('receiptPreview').innerHTML='';renderAll();alert('Transaction encrypted and saved on this device.')};
 $('stockForm').onsubmit=async e=>{e.preventDefault();let s=read('mtkStock',[]);s.push({id:Date.now(),name:$('stName').value,category:$('stCategory').value,qty:Number($('stQty').value),cost:Number($('stCost').value),price:Number($('stPrice').value||0),supplier:$('stSupplier').value,date:$('stDate').value,notes:$('stNotes').value});if(!await saveData({mtkStock:s}))return;e.target.reset();$('stQty').value=1;$('stDate').value=today();renderAll();alert('Stock item encrypted and saved.')};
@@ -465,12 +487,61 @@ function selected(){let f=$('fromDate').value,t=$('toDate').value;return read('m
 function renderStats(){let tx=selected(),inc=tx.filter(x=>x.type==='income').reduce((s,x)=>s+x.amount,0),exp=tx.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0);$('totalIncome').textContent=money(inc);$('totalExpense').textContent=money(exp);$('net').textContent=money(inc-exp);$('net').className=inc-exp<0?'bad':'';$('stockCount').textContent=read('mtkStock',[]).reduce((s,x)=>s+x.qty,0)}
 function renderStock(){let s=read('mtkStock',[]);$('stockList').innerHTML=s.length?s.map(x=>`<div class="row"><strong>${esc(x.name)}</strong> <span class="pill">${esc(x.category)}</span><div>Qty: ${x.qty} · Cost/item: ${money(x.cost)} · Sell/item: ${money(x.price)} · Stock cost: ${money(x.qty*x.cost)}</div><div class="hint">Supplier: ${esc(x.supplier)} · ${esc(x.date)} · ${esc(x.notes)}</div><div class="actions no-print"><button class="btn alt" onclick="changeQty(${x.id},-1)">−1 sold/used</button><button class="btn alt" onclick="changeQty(${x.id},1)">+1 stock</button><button class="btn red" onclick="deleteStock(${x.id})">Delete</button></div></div>`).join(''):'<p class="hint">No stock items added yet.</p>'}
 window.changeQty=async(id,d)=>{let s=read('mtkStock',[]),x=s.find(a=>a.id===id);if(x){x.qty=Math.max(0,x.qty+d);if(await saveData({mtkStock:s}))renderAll()}};window.deleteStock=async id=>{if(confirm('Delete this stock item?')&&await saveData({mtkStock:read('mtkStock',[]).filter(x=>x.id!==id)}))renderAll()};
-function renderHistory(){let q=$('searchHistory').value.toLowerCase(),typ=$('historyType').value;let tx=selected().filter(x=>(typ==='all'||x.type===typ)&&[x.description,x.category,x.person,x.notes].join(' ').toLowerCase().includes(q)).slice().reverse();$('historyList').innerHTML=tx.length?tx.map(x=>`<div class="row"><strong>${esc(x.date)} · ${esc(x.description)}</strong><div>${x.type==='income'?'Money received':'Money spent'}: <b>${money(x.amount)}</b> · ${esc(x.category)} · ${esc(x.payment)}</div><div class="hint">${esc(x.person)} · Qty ${x.qty} · ${esc(x.notes)}</div>${x.receipt?`<img class="receipt" src="${x.receipt}" alt="Receipt slip">`:''}<div class="actions no-print"><button class="btn red" onclick="deleteTx('${x.id}')">Delete record</button></div></div>`).join(''):'<p class="hint">No matching transactions for this date range.</p>'}
+function renderHistory(){let q=$('searchHistory').value.toLowerCase(),typ=$('historyType').value;let tx=selected().filter(x=>(typ==='all'||x.type===typ)&&[x.description,x.category,x.person,x.notes].join(' ').toLowerCase().includes(q)).slice().reverse();$('historyList').innerHTML=tx.length?tx.map(x=>`<div class="row"><strong>${esc(x.date)} · ${esc(x.description)}</strong><div>${x.type==='income'?'Money received':'Money spent'}: <b>${money(x.amount)}</b> · ${esc(x.category)} · ${esc(x.payment)}</div><div class="hint">${esc(x.person)} · Qty ${x.qty} · ${esc(x.notes)}</div>${x.receipt?`<img class="receipt" src="${x.receipt}" alt="Receipt slip">`:''}<div class="actions no-print"><button class="btn alt" data-print-type="transaction" data-print-id="${esc(x.id)}">Print receipt / save PDF</button><button class="btn red" onclick="deleteTx('${x.id}')">Delete record</button></div></div>`).join(''):'<p class="hint">No matching transactions for this date range.</p>'}
 window.deleteTx=async id=>{if(confirm('Delete this transaction and its receipt photo?')&&await saveData({mtkTransactions:read('mtkTransactions',[]).filter(x=>x.id!==id)}))renderAll()};
 function renderReport(){let tx=selected(),inc=tx.filter(x=>x.type==='income').reduce((s,x)=>s+x.amount,0),exp=tx.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0);$('reportSummary').innerHTML=`<div class="stats"><div class="stat"><span>Transactions</span><strong>${tx.length}</strong></div><div class="stat"><span>Income</span><strong>${money(inc)}</strong></div><div class="stat"><span>Expenses</span><strong>${money(exp)}</strong></div><div class="stat"><span>Net cash gain / loss</span><strong>${money(inc-exp)}</strong></div></div>`}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function renderAll(){renderStats();renderStock();renderHistory();renderReport()}
 $('filterBtn').onclick=renderAll;$('searchHistory').oninput=renderHistory;$('historyType').onchange=renderHistory;
+function printField(label,value){return `<div class="customer-print-field"><span>${esc(label)}</span><strong>${esc(value||'—')}</strong></div>`}
+function printNotes(label,value){return value?`<div class="customer-print-notes"><strong>${esc(label)}</strong><br>${esc(value)}</div>`:''}
+function imageDataUrl(value){return typeof value==='string'&&/^data:image\/(?:jpeg|png|webp|gif);base64,[A-Za-z0-9+/=\r\n]+$/i.test(value)?value:''}
+window.printCustomerRecord=async(type,id)=>{
+ const records={transaction:read('mtkTransactions',[]),repair:read('mtkRepairJobs',[]),debt:read('mtkDebts',[])};
+ const record=records[type]?.find(item=>String(item.id)===String(id));
+ if(!record){alert('That customer record could not be found. Refresh the list and try again.');return}
+ const receiptData=imageDataUrl(record.receipt);
+ const conditionPhotoData=imageDataUrl(record.conditionPhoto);
+ let title,reference,fields,totalLabel,total,notes='',attachments='';
+ if(type==='transaction'){
+  title=record.type==='expense'?'Payment record':'Customer receipt';
+  reference=record.id;
+  fields=printField('Date',record.date)+printField('Customer',record.person)+printField('Description',record.description)+printField('Category',record.category)+printField('Quantity',record.qty)+printField('Payment method',record.payment);
+  totalLabel=record.type==='expense'?'Amount paid':'Amount received';
+  total=money(record.amount);
+  notes=printNotes('Notes',record.notes);
+  attachments=receiptData?`<img class="customer-print-receipt" src="${esc(receiptData)}" alt="Attached receipt photo">`:'';
+ }else if(type==='repair'){
+  title='Repair service report';
+  reference=record.ticket;
+  fields=printField('Customer',record.customer)+printField('Phone',record.phone)+printField('Device / model',record.device)+printField('IMEI / serial',record.serial)+printField('Date received',record.date)+printField('Repair status',record.status)+printField('Warranty',`${record.warranty||0} days`);
+  totalLabel='Quoted price';
+  total=money(record.quote);
+  notes=[printNotes('Customer-reported problem',record.complaint),printNotes('Initial condition',record.initial),printNotes('Work performed',record.work),printNotes('Final test / remaining faults',record.final)].join('');
+  attachments=conditionPhotoData?`<img class="customer-print-receipt" src="${esc(conditionPhotoData)}" alt="Phone condition photo">`:'';
+ }else{
+  title='Customer account statement';
+  reference=record.ref;
+  const balance=Math.max(0,Number(record.total||0)-Number(record.paid||0));
+  fields=printField('Customer',record.customer)+printField('Phone',record.phone)+printField('Invoice / ticket',record.ref)+printField('Statement date',record.date)+printField('Due date',record.due||'Not set')+printField('Total amount',money(record.total))+printField('Paid so far',money(record.paid));
+  totalLabel='Outstanding balance';
+  total=money(balance);
+  notes=printNotes('Notes',record.notes);
+ }
+ $('customerPrintSheet').innerHTML=`<article class="customer-print"><div class="customer-print-header"><div><h1>MTK Mobile Solution</h1><p>WE FIX, YOU SMILE</p></div><img class="customer-print-logo" src="./mtk-logo.jpeg" alt="MTK Mobile Solution logo"></div><h2 class="customer-print-title">${esc(title)}</h2><p>Reference: <strong>${esc(reference||'Not provided')}</strong></p><div class="customer-print-fields">${fields}</div><div class="customer-print-total"><span>${esc(totalLabel)}</span><strong>${esc(total)}</strong></div>${notes}${attachments}<footer class="customer-print-footer">Thank you for choosing MTK Mobile Solution. Please keep this document for your records.</footer></article>`;
+ document.body.classList.add('printing-customer');
+ window.__mtkPrintPdfFileName=`MTK-${title}-${record.person||record.customer||record.ticket||record.id}`.replace(/[\\/:*?"<>|]+/g,'-');
+ try{
+  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  await Promise.all([...$('customerPrintSheet').querySelectorAll('img')].map(image=>image.decode()));
+  window.print();
+ }catch(error){console.error('Could not prepare the customer PDF.',error);document.body.classList.remove('printing-customer');alert('Could not prepare the customer PDF. Check that the logo and receipt photos are available, then try again.')}
+};
+function clearCustomerPrintSheet(){document.body.classList.remove('printing-customer');$('customerPrintSheet').replaceChildren();window.__mtkPrintPdfFileName=''}
+window.addEventListener('afterprint',clearCustomerPrintSheet);
+window.addEventListener('mtk-print-pdf-finished',clearCustomerPrintSheet);
+if(window.chrome?.webview)window.chrome.webview.addEventListener('message',event=>{if(event.data==='MTK_PRINT_PDF_FINISHED')clearCustomerPrintSheet()});
+for(const listId of ['historyList','repairList','debtList'])$(listId).addEventListener('click',event=>{const button=event.target.closest('[data-print-type]');if(button&&event.currentTarget.contains(button))window.printCustomerRecord(button.dataset.printType,button.dataset.printId)});
 function exportBackup(){let data={app:'MTK Private Business Manager',version:1,exported:new Date().toISOString(),transactions:read('mtkTransactions',[]),stock:read('mtkStock',[]),repairJobs:read('mtkRepairJobs',[]),debts:read('mtkDebts',[])};let b=new Blob([JSON.stringify(data)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='mtk-business-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 $('exportBtn').onclick=exportBackup;$('exportBtn2').onclick=exportBackup;
 async function importBackup(file){try{let d=JSON.parse(await file.text());if(!Array.isArray(d.transactions)||!Array.isArray(d.stock)||(d.repairJobs!==undefined&&!Array.isArray(d.repairJobs))||(d.debts!==undefined&&!Array.isArray(d.debts)))throw Error('Invalid backup');if(!confirm('Import this JSON backup and replace the current records? The imported records will be encrypted with your app password. Export current data first if you need it.'))return;if(!await saveData({mtkTransactions:d.transactions,mtkStock:d.stock,mtkRepairJobs:d.repairJobs||[],mtkDebts:d.debts||[]}))return;renderAll();alert('Backup imported and encrypted with your app password.')}catch(e){console.error('Could not import the backup.',e);alert(`Could not import this backup file. ${e?.message||''}`)}}
@@ -497,16 +568,16 @@ $('copyOcrBtn').onclick=async()=>{try{await navigator.clipboard.writeText($('ocr
 
 $('repairForm').onsubmit=async e=>{
  e.preventDefault();let arr=read('mtkRepairJobs',[]);
- const x={id:Date.now(),ticket:$('rpTicket').value,date:$('rpDate').value,customer:$('rpCustomer').value,phone:$('rpPhone').value,device:$('rpDevice').value,serial:$('rpSerial').value,complaint:$('rpComplaint').value,initial:$('rpInitial').value,work:$('rpWork').value,status:$('rpStatus').value,quote:Number($('rpQuote').value||0),warranty:Number($('rpWarranty').value||0),final:$('rpFinal').value};
+ const x={id:Date.now(),ticket:$('rpTicket').value,date:$('rpDate').value,customer:$('rpCustomer').value,phone:$('rpPhone').value,device:$('rpDevice').value,serial:$('rpSerial').value,complaint:$('rpComplaint').value,initial:$('rpInitial').value,work:$('rpWork').value,status:$('rpStatus').value,quote:Number($('rpQuote').value||0),warranty:Number($('rpWarranty').value||0),final:$('rpFinal').value,conditionPhoto:$('rpConditionPhoto').dataset.photo||''};
  const i=arr.findIndex(a=>a.ticket.toLowerCase()===x.ticket.toLowerCase());
- if(i>=0){if(!confirm('Ticket already exists. Update it?'))return; x.id=arr[i].id;arr[i]=x}else arr.push(x);
+ if(i>=0){if(!confirm('Ticket already exists. Update it?'))return; x.id=arr[i].id;x.conditionPhoto=x.conditionPhoto||arr[i].conditionPhoto||'';arr[i]=x}else arr.push(x);
  if(!await saveData({mtkRepairJobs:arr}))return;renderAll();alert('Repair job encrypted and saved.');
 };
-function renderRepairs(){const a=read('mtkRepairJobs',[]).slice().reverse();$('repairList').innerHTML=a.length?a.map(x=>`<div class="row"><strong>${esc(x.ticket)} · ${esc(x.customer)}</strong> <span class="pill">${esc(x.status)}</span><div>${esc(x.device)} · Received ${esc(x.date)} · Quote ${money(x.quote)}</div><div class="hint">Phone: ${esc(x.phone)} · Serial: ${esc(x.serial)}<br>Reported: ${esc(x.complaint)}<br>Initial condition: ${esc(x.initial)}<br>Work: ${esc(x.work)}<br>Final test: ${esc(x.final)}<br>Warranty: ${x.warranty} days (if offered)</div><div class="actions no-print"><button class="btn alt" onclick="editRepair(${x.id})">Edit status/details</button><button class="btn red" onclick="deleteRepair(${x.id})">Delete</button></div></div>`).join(''):'<p class="hint">No repair jobs recorded yet.</p>'}
-window.editRepair=id=>{let x=read('mtkRepairJobs',[]).find(a=>a.id===id);if(!x)return;[['rpTicket','ticket'],['rpDate','date'],['rpCustomer','customer'],['rpPhone','phone'],['rpDevice','device'],['rpSerial','serial'],['rpComplaint','complaint'],['rpInitial','initial'],['rpWork','work'],['rpStatus','status'],['rpQuote','quote'],['rpWarranty','warranty'],['rpFinal','final']].forEach(([a,b])=>$(a).value=x[b]??'');document.querySelector('[data-tab="repairs"]').click();window.scrollTo({top:0,behavior:'smooth'})};
+function renderRepairs(){const a=read('mtkRepairJobs',[]).slice().reverse();$('repairList').innerHTML=a.length?a.map(x=>`<div class="row"><strong>${esc(x.ticket)} · ${esc(x.customer)}</strong> <span class="pill">${esc(x.status)}</span><div>${esc(x.device)} · Received ${esc(x.date)} · Quote ${money(x.quote)}</div><div class="hint">Phone: ${esc(x.phone)} · Serial: ${esc(x.serial)}<br>Reported: ${esc(x.complaint)}<br>Initial condition: ${esc(x.initial)}<br>Work: ${esc(x.work)}<br>Final test: ${esc(x.final)}<br>Warranty: ${x.warranty} days (if offered)</div>${imageDataUrl(x.conditionPhoto)?`<img class="repair-condition-photo" src="${esc(imageDataUrl(x.conditionPhoto))}" alt="Phone condition photo">`:''}<div class="actions no-print"><button class="btn alt" data-print-type="repair" data-print-id="${esc(x.id)}">Print customer report / save PDF</button><button class="btn alt" onclick="editRepair(${x.id})">Edit status/details</button><button class="btn red" onclick="deleteRepair(${x.id})">Delete</button></div></div>`).join(''):'<p class="hint">No repair jobs added yet.</p>'}
+window.editRepair=id=>{let x=read('mtkRepairJobs',[]).find(a=>a.id===id);if(!x)return;[['rpTicket','ticket'],['rpDate','date'],['rpCustomer','customer'],['rpPhone','phone'],['rpDevice','device'],['rpSerial','serial'],['rpComplaint','complaint'],['rpInitial','initial'],['rpWork','work'],['rpStatus','status'],['rpQuote','quote'],['rpWarranty','warranty'],['rpFinal','final']].forEach(([a,b])=>$(a).value=x[b]??'');const photo=imageDataUrl(x.conditionPhoto);$('rpConditionPhoto').dataset.photo=photo;$('rpConditionPhotoPreview').innerHTML=photo?`<img class="repair-condition-photo" alt="Phone condition photo" src="${esc(photo)}"><p class="hint">Saved condition photo. Choose another image to replace it.</p>`:'';document.querySelector('[data-tab="repairs"]').click();window.scrollTo({top:0,behavior:'smooth'})};
 window.deleteRepair=async id=>{if(confirm('Delete this repair job?')&&await saveData({mtkRepairJobs:read('mtkRepairJobs',[]).filter(x=>x.id!==id)}))renderAll()};
 $('debtForm').onsubmit=async e=>{e.preventDefault();let arr=read('mtkDebts',[]);arr.push({id:Date.now(),customer:$('dbCustomer').value,phone:$('dbPhone').value,ref:$('dbRef').value,date:$('dbDate').value,total:Number($('dbTotal').value),paid:Number($('dbPaid').value||0),due:$('dbDue').value,notes:$('dbNotes').value});if(!await saveData({mtkDebts:arr}))return;e.target.reset();$('dbDate').value=today();$('dbPaid').value=0;renderAll();alert('Balance encrypted and saved.')};
-function renderDebts(){let a=read('mtkDebts',[]).slice().reverse();$('debtList').innerHTML=a.length?a.map(x=>{let bal=Math.max(0,x.total-x.paid);return `<div class="row"><strong>${esc(x.customer)} · Balance ${money(bal)}</strong><div>Invoice/ticket: ${esc(x.ref)} · Total ${money(x.total)} · Paid ${money(x.paid)}</div><div class="hint">Phone: ${esc(x.phone)} · Date: ${esc(x.date)} · Due: ${esc(x.due)} · ${esc(x.notes)}</div><div class="actions no-print"><button class="btn alt" onclick="addDebtPayment(${x.id})">Record payment</button><button class="btn red" onclick="deleteDebt(${x.id})">Delete</button></div></div>`}).join(''):'<p class="hint">No balances recorded.</p>'}
+function renderDebts(){let a=read('mtkDebts',[]).slice().reverse();$('debtList').innerHTML=a.length?a.map(x=>{let bal=Math.max(0,x.total-x.paid);return `<div class="row"><strong>${esc(x.customer)} · Balance ${money(bal)}</strong><div>Invoice/ticket: ${esc(x.ref)} · Total ${money(x.total)} · Paid ${money(x.paid)}</div><div class="hint">Phone: ${esc(x.phone)} · Date: ${esc(x.date)} · Due: ${esc(x.due)} · ${esc(x.notes)}</div><div class="actions no-print"><button class="btn alt" data-print-type="debt" data-print-id="${esc(x.id)}">Print statement / save PDF</button><button class="btn alt" onclick="addDebtPayment(${x.id})">Record payment</button><button class="btn red" onclick="deleteDebt(${x.id})">Delete</button></div></div>`}).join(''):'<p class="hint">No balances recorded.</p>'}
 window.addDebtPayment=async id=>{let a=read('mtkDebts',[]),x=a.find(v=>v.id===id);if(!x)return;let p=Number(prompt('How much did the customer pay now? (R)','0'));if(!p||p<=0)return;x.paid=Math.min(x.total,x.paid+p);let tx=read('mtkTransactions',[]);tx.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),type:'income',date:today(),category:'Customer debt payment',amount:p,description:'Payment from '+x.customer+' ('+(x.ref||'no reference')+')',payment:'Cash / check notes',person:x.customer,qty:1,notes:'Recorded from balance tracker; receipt not attached',receipt:'',created:new Date().toISOString()});if(!await saveData({mtkDebts:a,mtkTransactions:tx}))return;renderAll();alert('Payment encrypted, saved and added to income. Make sure the payment is real and the amount is correct.')};
 window.deleteDebt=async id=>{if(confirm('Delete this balance record?')&&await saveData({mtkDebts:read('mtkDebts',[]).filter(x=>x.id!==id)}))renderAll()};
 function updateConnectionStatus(){const online=navigator.onLine;const status=$('connectionStatus');status.textContent=online?'Online · Internet available. Your encrypted records stay on this device.':'Offline · The installed app and encrypted saved records remain available. Receipt scanning needs internet.';status.classList.toggle('offline',!online)}
