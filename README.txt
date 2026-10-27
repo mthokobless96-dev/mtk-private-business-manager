@@ -26,9 +26,16 @@ IMPORTANT LIMITATIONS
 - For stronger security and use across devices, a later version needs a secure backend, encrypted storage, user authentication, and tested backups.
 
 RUN ON YOUR PHONE
-1. Open the online app in Android Chrome and choose Install app / Add to Home screen.
+1. Connect to the internet and open the online app in Android Chrome.
+2. Choose Install app / Add to Home screen and open the installed app once while online.
+3. After the first online visit, open the installed app again without internet to use saved records offline.
 4. Create your private password on first launch.
 5. Export backups regularly and keep them somewhere private.
+
+ONLINE AND OFFLINE USE
+- The installed app caches its screen, logo, and installation files on this device and opens the latest screen from the internet when a connection is available.
+- Transactions, stock, repairs, customer balances, and receipt photos are stored locally in the browser on this device. They do not automatically sync between devices or to the website.
+- Receipt OCR requires an internet connection. If the offline page does not load on the first attempt, reopen the app while online to finish installing its cached files.
 
 APK
 This package is the PWA source, not a compiled APK. After hosting over HTTPS, you can use PWABuilder (https://www.pwabuilder.com/) to package it for Android and follow the Android signing/build instructions. Test the package on your own phone before relying on it for business records.
