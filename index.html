@@ -120,7 +120,6 @@ body[data-theme="dark"] .recovery-dialog{background:#1b2b39;border-color:#354f62
 <div id="app" class="hidden">
 <main>
 <div class="actions no-print"><button class="btn alt" id="lockBtn">Lock app</button><button class="btn alt" id="exportBtn">Export backup</button><label class="btn alt" style="display:inline-flex;align-items:center;cursor:pointer">Import backup<input id="importFile" type="file" accept=".json,application/json" hidden></label><button class="btn alt" onclick="window.print()">Print current page</button></div>
-<div class="warning">Saved records are encrypted on this device. Exported JSON backups are not encrypted. Do not record bank PINs, passwords, or customers' phone unlock codes; store backups somewhere private.</div>
 <section class="card"><h2>Business overview</h2><div class="grid"><div><label>From date</label><input type="date" id="fromDate"></div><div><label>To date</label><input type="date" id="toDate"></div><div style="align-self:end"><button class="btn" id="filterBtn">Update totals</button></div></div><div class="stats" style="margin-top:12px">
 <div class="stat"><span>Sales / money received</span><strong id="totalIncome">R0.00</strong></div>
 <div class="stat"><span>Expenses / money spent</span><strong id="totalExpense">R0.00</strong></div>
