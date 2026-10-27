@@ -2,62 +2,62 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#071521"><meta name="description" content="Manage MTK Mobile Solution income, expenses, stock, repairs and customer balances in one private workspace."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MTK Business"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/jpeg" href="./mtk-logo.jpeg"><title>MTK Private Business Manager</title>
+<meta name="theme-color" content="#38bdf8"><meta name="description" content="Manage MTK Mobile Solution income, expenses, stock, repairs and customer balances in one private workspace."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MTK Business"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/jpeg" href="./mtk-logo.jpeg"><title>MTK Private Business Manager</title>
 <style>
-:root{color-scheme:dark;--teal:#25d3e6;--teal-dark:#0da8bd;--dark:#07131d;--panel:#101f2b;--panel-raised:#142735;--line:#263c49;--muted:#a9bac5;--text:#f2f7fa;--success:#68dbac;--danger:#ff8790}
+:root{color-scheme:light;--sky:#38bdf8;--sky-dark:#0284c7;--sky-soft:#e0f2fe;--dark:#eff8ff;--panel:#fff;--panel-raised:#f7fbff;--line:#cfe6f5;--muted:#506b7e;--text:#17364b;--success:#16835d;--danger:#c5394b}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -18%,#173b4b 0,transparent 46%),var(--dark);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -18%,#c7eaff 0,transparent 52%),var(--dark);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
 button,input,select,textarea{font:inherit}
-header{padding:22px 18px 17px;text-align:center;background:linear-gradient(180deg,rgba(8,21,31,.94),rgba(8,21,31,.68));border-bottom:1px solid rgba(37,211,230,.38)}
-.brand-logo{display:block;width:min(100%,520px);height:250px;object-fit:cover;object-position:center 51%;margin:0 auto 10px;background:#fff;border:1px solid rgba(255,255,255,.82);border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.24)}
-header p{margin:0;color:#dce7ed;font-size:14px;font-weight:750;letter-spacing:2.2px}
-.slogan{color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2.5px;text-align:center;padding:4px 8px}
-.connection-status{max-width:1180px;margin:12px auto 0;padding:9px 14px;border:1px solid #29444f;border-radius:10px;background:#10212c;color:#b9cad3;font-size:12px}
-.connection-status::before{content:"";display:inline-block;width:8px;height:8px;margin-right:9px;border-radius:50%;background:var(--success);box-shadow:0 0 10px rgba(104,219,172,.4)}
-.connection-status.offline{border-color:#655339;background:#261f15;color:#f1d8aa}
-.connection-status.offline::before{background:#ffbd4a;box-shadow:0 0 10px rgba(255,189,74,.35)}
+header{padding:22px 18px 17px;text-align:center;background:linear-gradient(180deg,rgba(224,242,254,.96),rgba(239,248,255,.88));border-bottom:1px solid #b7ddf4}
+.brand-logo{display:block;width:min(100%,520px);height:250px;object-fit:cover;object-position:center 51%;margin:0 auto 10px;background:#fff;border:1px solid #d6eafa;border-radius:14px;box-shadow:0 12px 30px rgba(20,88,133,.14)}
+header p{margin:0;color:#244b65;font-size:14px;font-weight:750;letter-spacing:2.2px}
+.slogan{color:var(--sky-dark);font-size:11px;font-weight:800;letter-spacing:2.5px;text-align:center;padding:4px 8px}
+.connection-status{max-width:1180px;margin:12px auto 0;padding:9px 14px;border:1px solid #cfe6f5;border-radius:10px;background:#fff;color:#456277;font-size:12px}
+.connection-status::before{content:"";display:inline-block;width:8px;height:8px;margin-right:9px;border-radius:50%;background:var(--success);box-shadow:0 0 10px rgba(22,131,93,.25)}
+.connection-status.offline{border-color:#ead5a9;background:#fff8e9;color:#775619}
+.connection-status.offline::before{background:#d89213;box-shadow:0 0 10px rgba(216,146,19,.25)}
 main{max-width:1180px;margin:auto;padding:24px 20px 40px}
-.card{background:linear-gradient(145deg,rgba(20,39,53,.98),rgba(15,30,42,.98));border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:0 12px 32px rgba(0,0,0,.13)}
-h2{font-size:18px;line-height:1.35;margin:0 0 16px;color:#eaf9fc;letter-spacing:.1px}
-h3{font-size:14px;color:#b5eff5;margin:22px 0 10px}
-label{display:block;font-size:12px;font-weight:650;color:#c0cdd5;margin:0 0 6px}
-input,select,textarea{width:100%;padding:11px 12px;border:1px solid #344d5c;border-radius:9px;background:#091722;color:var(--text);transition:border-color .16s,box-shadow .16s}
-input::placeholder,textarea::placeholder{color:#8498a5}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(37,211,230,.15)}
-input[type=checkbox]{width:auto;accent-color:var(--teal)}
+.card{background:linear-gradient(145deg,#fff,#f8fcff);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:0 12px 32px rgba(34,93,131,.08)}
+h2{font-size:18px;line-height:1.35;margin:0 0 16px;color:#174768;letter-spacing:.1px}
+h3{font-size:14px;color:#0878b5;margin:22px 0 10px}
+label{display:block;font-size:12px;font-weight:650;color:#456277;margin:0 0 6px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #c7dce9;border-radius:9px;background:#fff;color:var(--text);transition:border-color .16s,box-shadow .16s}
+input::placeholder,textarea::placeholder{color:#7890a0}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--sky-dark);box-shadow:0 0 0 3px rgba(56,189,248,.19)}
+input[type=checkbox]{width:auto;accent-color:var(--sky-dark)}
 input[type=file]{padding:7px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px}
-.btn{min-height:42px;border:1px solid transparent;border-radius:9px;padding:10px 15px;font-weight:750;cursor:pointer;background:var(--teal);color:#06151d;transition:background .16s,border-color .16s,transform .16s}
-.btn:hover{background:#65e5f1;transform:translateY(-1px)}
-.btn:focus-visible,.tabs button:focus-visible{outline:2px solid #fff;outline-offset:3px}
-.btn.alt{background:#172d3a;color:#e5f2f6;border-color:#354c5a}
-.btn.alt:hover{background:#203c4b;border-color:#587181}
-.btn.red{background:#742f3a;color:white}
-.btn.red:hover{background:#913b49}
+.btn{min-height:42px;border:1px solid transparent;border-radius:9px;padding:10px 15px;font-weight:750;cursor:pointer;background:var(--sky);color:#08324a;transition:background .16s,border-color .16s,transform .16s}
+.btn:hover{background:#7dd3fc;transform:translateY(-1px)}
+.btn:focus-visible,.tabs button:focus-visible{outline:2px solid var(--sky-dark);outline-offset:3px}
+.btn.alt{background:#edf7fd;color:#28536d;border-color:#c7e3f4}
+.btn.alt:hover{background:#dff1fc;border-color:#93cbea}
+.btn.red{background:#c5394b;color:#fff}
+.btn.red:hover{background:#a82d40}
 .actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:14px}
-.tabs{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;margin:2px 0 16px;padding:3px 2px 9px;scrollbar-color:#385664 transparent}
-.tabs button{flex:0 0 auto;background:#122430;color:#c8d6dd;border:1px solid #2b414e;border-radius:9px;padding:10px 14px;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
-.tabs button:hover{background:#1a3341;border-color:#466575;color:#fff}
-.tabs button.active{background:rgba(37,211,230,.13);color:#81eff7;border-color:rgba(37,211,230,.55);font-weight:800}
+.tabs{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;margin:2px 0 16px;padding:3px 2px 9px;scrollbar-color:#91cdea transparent}
+.tabs button{flex:0 0 auto;background:#fff;color:#456277;border:1px solid #cfe1ec;border-radius:9px;padding:10px 14px;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
+.tabs button:hover{background:#eff8fe;border-color:#9fcfea;color:#174768}
+.tabs button.active{background:#d9f1ff;color:#075b91;border-color:#76c5f0;font-weight:800}
 .hidden{display:none!important}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,205px),1fr));gap:12px;margin-top:16px}
-.stat{min-width:0;background:linear-gradient(145deg,#0b1924,#0d1d28);border:1px solid #283f4c;border-radius:12px;padding:16px}
-.stat span{display:block;color:var(--muted);font-size:12px;line-height:1.45}
+.stat{min-width:0;background:linear-gradient(145deg,#eff8fe,#e4f3fc);border:1px solid #cae4f4;border-radius:12px;padding:16px}
+.stat span{display:block;color:#506b7e;font-size:12px;line-height:1.45}
 .stat strong{display:block;font-size:clamp(20px,3vw,25px);line-height:1.2;margin-top:9px;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 .good{color:var(--success)}.bad{color:var(--danger)}
 .hint{font-size:12px;line-height:1.65;color:var(--muted)}
-.row{background:#0b1924;border:1px solid #293e4a;border-radius:11px;padding:14px;margin:10px 0}
-.row strong{color:#8ceaf1}
+.row{background:#f4faff;border:1px solid #d3e8f5;border-radius:11px;padding:14px;margin:10px 0}
+.row strong{color:#0878b5}
 .receipt{max-width:180px;max-height:180px;display:block;margin-top:8px;border-radius:8px}
 .checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
-.check{display:flex;align-items:center;gap:8px;background:#0b1924;padding:9px;border:1px solid #294553;border-radius:8px}
-.check label{margin:0;color:#fff;font-size:13px}
+.check{display:flex;align-items:center;gap:8px;background:#f4faff;padding:9px;border:1px solid #d3e8f5;border-radius:8px}
+.check label{margin:0;color:#244b65;font-size:13px}
 #login{max-width:460px;margin:clamp(24px,6vh,70px) auto;padding:26px}
 #login h2{font-size:21px}
-.warning{border:1px solid rgba(255,189,74,.2);border-left:4px solid #ffbd4a;border-radius:8px;padding:12px 14px;background:rgba(70,49,17,.52);color:#f5e6c6;font-size:12px;line-height:1.65}
-.pill{display:inline-block;font-size:11px;background:#173643;border:1px solid #26505c;border-radius:20px;padding:3px 9px;color:#a6effa}
+.warning{border:1px solid #f1dfb8;border-left:4px solid #d89213;border-radius:8px;padding:12px 14px;background:#fff8e9;color:#624a20;font-size:12px;line-height:1.65}
+.pill{display:inline-block;font-size:11px;background:#e2f4ff;border:1px solid #c1e5f9;border-radius:20px;padding:3px 9px;color:#17608c}
 @media(max-width:600px){header{padding:18px 14px 14px}.brand-logo{max-width:390px;height:195px}header p{font-size:12px;letter-spacing:1.7px}.connection-status{margin:10px 12px 0}main{padding:16px 12px 28px}.card{padding:16px;border-radius:13px;margin-bottom:13px}.grid{gap:11px}.tabs{margin-right:-12px;margin-left:-4px;padding-right:12px}.actions .btn{flex:1 1 auto}#login{margin:24px 12px;padding:20px}.stat{padding:13px}}
-@media print{body{background:#fff;color:#111}header{background:#fff;border-color:#bbb}.brand-logo{height:160px}header p,h2,.slogan{color:#075b68}.card{background:#fff;color:#111;border:1px solid #aaa;box-shadow:none}.stat,.row{background:#fff;color:#111;border:1px solid #bbb}.stat span,.hint,label{color:#333}.no-print{display:none!important}input,select,textarea{background:#fff;color:#111}}
+@media print{body{background:#fff;color:#111}header{background:#eff8ff;border-color:#b7ddf4}.brand-logo{height:160px}header p,h2,.slogan{color:#075b91}.card{background:#fff;color:#111;border:1px solid #aaa;box-shadow:none}.stat,.row{background:#fff;color:#111;border:1px solid #bbb}.stat span,.hint,label{color:#333}.no-print{display:none!important}input,select,textarea{background:#fff;color:#111}}
 </style></head>
 <body>
 <header><img class="brand-logo" src="./mtk-logo.jpeg" alt="MTK Mobile Solution logo"><p>PRIVATE BUSINESS MANAGER</p><div class="slogan">WE FIX, YOU SMILE</div></header>

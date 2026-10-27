@@ -1,4 +1,4 @@
-const CACHE='mtk-business-v4';
+const CACHE='mtk-business-v5';
 const APP_SHELL=['./','./index.html','./manifest.webmanifest','./mtk-logo.jpeg'];
 
 function cacheResponse(request,response,label){

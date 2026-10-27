@@ -3,8 +3,8 @@
   "short_name": "MTK Business",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#071521",
-  "theme_color": "#071521",
+  "background_color": "#eff8ff",
+  "theme_color": "#38bdf8",
   "description": "Private income, expense, receipt and stock manager for MTK Mobile Solution",
   "icons": [
     {
