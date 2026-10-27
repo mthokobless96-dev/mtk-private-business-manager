@@ -1,4 +1,4 @@
-const CACHE='mtk-business-v5';
+const CACHE='mtk-business-v6';
 const APP_SHELL=['./','./index.html','./manifest.webmanifest','./mtk-logo.jpeg'];
 
 function cacheResponse(request,response,label){
@@ -35,5 +35,10 @@ self.addEventListener('fetch',event=>{
 
  const url=new URL(request.url);
  if(!/\.(?:css|html|ico|jpe?g|js|json|png|svg|webmanifest|woff2?)$/i.test(url.pathname))return;
- event.respondWith(caches.match(request).then(cached=>cached||fetch(request).then(response=>cacheResponse(request,response,'asset'))));
+ event.respondWith(fetch(request).then(response=>cacheResponse(request,response,'asset')).catch(error=>
+  caches.match(request).then(cached=>{
+   if(cached)return cached;
+   throw error;
+  })
+ ));
 });
