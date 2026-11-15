@@ -3,6 +3,7 @@ const statusElement = document.querySelector("#status");
 const ownerButton = document.querySelector("#ownerButton");
 const ownerDialog = document.querySelector("#ownerDialog");
 const itemDialog = document.querySelector("#itemDialog");
+const staticPreview = document.querySelector('meta[name="eat-out-mode"]')?.content === "static-preview";
 const order = new Map();
 const MENU_STORAGE_KEY = "eat-out-public-menu-v1";
 const ORDER_STORAGE_KEY = "eat-out-customer-order-v1";
@@ -93,14 +94,14 @@ function escapeHtml(value) {
 async function api(url, options = {}) {
   const response = await fetch(url, {
     credentials: "same-origin",
-    ...(url === "/api/menu" ? { cache: "no-store" } : {}),
+    ...(url.endsWith("/api/menu") ? { cache: "no-store" } : {}),
     ...options,
     headers: {
       ...(options.body ? { "Content-Type": "application/json" } : {}),
       ...options.headers
     }
   });
-  if (url === "/api/menu") {
+  if (url.endsWith("/api/menu")) {
     menuServedFromCache = response.headers.get("X-Eat-Out-Offline") === "true";
   }
   if (!response.ok) {
@@ -210,10 +211,31 @@ async function loadApp() {
     ? "Showing your saved menu while checking for updates…"
     : "Loading the menu…";
   try {
+    if (staticPreview) {
+      const items = await api("./menu.json");
+      menuItems = items.filter(item => item.isAvailable);
+      storeMenu(items);
+      for (const id of order.keys()) {
+        if (!menuItems.some(item => item.id === id)) order.delete(id);
+      }
+      storeOrder();
+      isOwner = false;
+      setupRequired = false;
+      whatsappNumber = "";
+      ownerButton.hidden = true;
+      statusElement.textContent = navigator.onLine
+        ? "Customer preview · Menu and prices refresh when you reconnect. Orders are shared from your phone."
+        : "Offline preview · Showing the last menu and prices saved on this phone.";
+      statusElement.setAttribute("role", "status");
+      updateOwnerControls();
+      renderOrder();
+      return;
+    }
+
     const [menuResult, configResult, ownerResult] = await Promise.allSettled([
-      api("/api/menu"),
-      api("/api/config"),
-      api("/api/owner/session")
+      api("api/menu"),
+      api("api/config"),
+      api("api/owner/session")
     ]);
 
     if (menuResult.status === "fulfilled") {
@@ -268,7 +290,7 @@ async function refreshMenuForCustomers() {
   if (!navigator.onLine || menuRefreshInProgress || refreshInProgress || document.visibilityState === "hidden") return;
   menuRefreshInProgress = true;
   try {
-    const updatedItems = (await api("/api/menu", { cache: "no-store" }))
+    const updatedItems = (await api(staticPreview ? "./menu.json" : "api/menu", { cache: "no-store" }))
       .filter(item => item.isAvailable);
     if (menuServedFromCache) return;
     const previousMenu = JSON.stringify(menuItems);
@@ -328,6 +350,7 @@ function openItemDialog(item) {
 }
 
 document.querySelector("#ownerButton").addEventListener("click", () => {
+  if (staticPreview) return;
   if (isOwner) {
     document.querySelector("#ownerPanel").scrollIntoView({ behavior: "smooth", block: "center" });
     return;
@@ -341,11 +364,12 @@ document.querySelectorAll("[data-close]").forEach(button => {
 
 document.querySelector("#ownerForm").addEventListener("submit", async event => {
   event.preventDefault();
+  if (staticPreview) return;
   const errorElement = document.querySelector("#ownerError");
   errorElement.textContent = "";
   const password = document.querySelector("#ownerPassword").value;
   try {
-    await api(setupRequired ? "/api/owner/setup" : "/api/owner/login", {
+    await api(setupRequired ? "api/owner/setup" : "api/owner/login", {
       method: "POST",
       body: JSON.stringify({ password })
     });
@@ -360,8 +384,9 @@ document.querySelector("#ownerForm").addEventListener("submit", async event => {
 });
 
 document.querySelector("#ownerLogout").addEventListener("click", async () => {
+  if (staticPreview) return;
   try {
-    await api("/api/owner/logout", { method: "POST" });
+    await api("api/owner/logout", { method: "POST" });
     isOwner = false;
     updateOwnerControls();
     showToast("Signed out.");
@@ -374,6 +399,7 @@ document.querySelector("#addItemButton").addEventListener("click", () => openIte
 
 document.querySelector("#itemForm").addEventListener("submit", async event => {
   event.preventDefault();
+  if (staticPreview) return;
   const errorElement = document.querySelector("#itemError");
   errorElement.textContent = "";
   const id = document.querySelector("#itemId").value;
@@ -384,7 +410,7 @@ document.querySelector("#itemForm").addEventListener("submit", async event => {
     price: Number(document.querySelector("#itemPrice").value)
   };
   try {
-    const saved = await api(id ? `/api/menu/${encodeURIComponent(id)}` : "/api/menu", {
+    const saved = await api(id ? `api/menu/${encodeURIComponent(id)}` : "api/menu", {
       method: id ? "PUT" : "POST",
       body: JSON.stringify(body)
     });

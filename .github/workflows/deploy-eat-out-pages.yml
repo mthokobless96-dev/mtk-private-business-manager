@@ -1,0 +1,66 @@
+name: Deploy Eat Out preview to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "eat-out/**"
+      - ".github/workflows/deploy-eat-out-pages.yml"
+      - ".github/workflows/deploy-eat-out-iis.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build customer preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Preserve the existing business manager and add Eat Out
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p _site/eat-out
+          for file in index.html manifest.webmanifest mtk-icon-192.png mtk-icon-512.png mtk-logo.jpeg sw.js; do
+            test -f "$file"
+            cp "$file" "_site/$file"
+          done
+
+          cp -R eat-out/EatOut.Api/wwwroot/. _site/eat-out/
+          cp eat-out/menu.json _site/eat-out/menu.json
+          sed -i 's/<meta name="eat-out-mode" content="sql">/<meta name="eat-out-mode" content="static-preview">/' _site/eat-out/index.html
+          grep -q '<meta name="eat-out-mode" content="static-preview">' _site/eat-out/index.html
+          test -s _site/eat-out/menu.json
+
+      - name: Set up GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy customer preview
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}eat-out/
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
