@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "name": "Classic Kota",
+    "description": "Bread, Polony & Achar",
+    "category": "Toasted Kota",
+    "price": 15,
+    "sortOrder": 10,
+    "isAvailable": true
+  },
+  {
+    "id": 2,
+    "name": "Vienna Kota",
+    "description": "Bread, Polony, Achar & Vienna",
+    "category": "Toasted Kota",
+    "price": 19,
+    "sortOrder": 20,
+    "isAvailable": true
+  },
+  {
+    "id": 3,
+    "name": "Special Vienna Kota",
+    "description": "Bread, Polony, Achar, Special & Vienna",
+    "category": "Toasted Kota",
+    "price": 23,
+    "sortOrder": 30,
+    "isAvailable": true
+  },
+  {
+    "id": 4,
+    "name": "Cheese & Vienna Kota",
+    "description": "Bread, Polony, Achar, Vienna & Cheese",
+    "category": "Toasted Kota",
+    "price": 25,
+    "sortOrder": 40,
+    "isAvailable": true
+  },
+  {
+    "id": 5,
+    "name": "Beef Burger Kota",
+    "description": "Bread, Polony, Achar, Cheese, Vienna & Beef Burger",
+    "category": "Toasted Kota",
+    "price": 28,
+    "sortOrder": 50,
+    "isAvailable": true
+  },
+  {
+    "id": 6,
+    "name": "Russian Kota",
+    "description": "Bread, Polony, Achar, Cheese, Vienna & Russian",
+    "category": "Toasted Kota",
+    "price": 30,
+    "sortOrder": 60,
+    "isAvailable": true
+  },
+  {
+    "id": 7,
+    "name": "The Works Kota",
+    "description": "Bread, Polony, Achar, Cheese, Vienna, Burger & Russian",
+    "category": "Toasted Kota",
+    "price": 35,
+    "sortOrder": 70,
+    "isAvailable": true
+  },
+  {
+    "id": 8,
+    "name": "Small chips + half bread",
+    "description": "",
+    "category": "Combos",
+    "price": 20,
+    "sortOrder": 80,
+    "isAvailable": true
+  },
+  {
+    "id": 9,
+    "name": "Chips, half bread & 2 Viennas",
+    "description": "",
+    "category": "Combos",
+    "price": 30,
+    "sortOrder": 90,
+    "isAvailable": true
+  }
+]

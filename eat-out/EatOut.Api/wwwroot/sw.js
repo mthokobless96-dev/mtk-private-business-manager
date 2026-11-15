@@ -1,6 +1,6 @@
-const CACHE_NAME = "eat-out-shell-v2";
+const CACHE_NAME = "eat-out-shell-v3";
 const MENU_CACHE_NAME = "eat-out-menu-v1";
-const APP_SHELL = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg"];
+const APP_SHELL = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg", "./menu.json"];
 
 self.addEventListener("install", event => {
   event.waitUntil(
@@ -25,7 +25,7 @@ self.addEventListener("fetch", event => {
   const url = new URL(request.url);
   if (request.method !== "GET" || url.origin !== self.location.origin) return;
 
-  if (url.pathname === "/api/menu") {
+  if (url.pathname.endsWith("/api/menu")) {
     event.respondWith((async () => {
       const cache = await caches.open(MENU_CACHE_NAME);
       try {
