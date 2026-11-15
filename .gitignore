@@ -1,2 +1,4 @@
 .idea/
 mtk-business-backup*.json
+**/bin/
+**/obj/

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#fffdf9"/>
+  <path d="M75 132h362M75 380h362" fill="none" stroke="#d65b5e" stroke-linecap="round" stroke-width="14"/>
+  <text x="256" y="238" fill="#33363c" font-family="Arial,sans-serif" font-size="94" font-weight="900" text-anchor="middle">EAT</text>
+  <text x="256" y="337" fill="#d65b5e" font-family="Arial,sans-serif" font-size="94" font-weight="900" text-anchor="middle">OUT</text>
+</svg>
