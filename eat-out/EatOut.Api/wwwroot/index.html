@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fffdf9">
+  <meta name="description" content="Browse the Eat Out toasted kota menu and place an order.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Eat Out">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <title>Eat Out · Toasted Kota Menu</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="page-header">
+    <div class="brand" aria-label="Eat Out">
+      <span class="brand-rays brand-rays-left" aria-hidden="true">⌁</span>
+      <span class="brand-name">EAT <span>OUT</span></span>
+      <span class="brand-rays brand-rays-right" aria-hidden="true">⌁</span>
+    </div>
+    <div class="brand-rule" aria-hidden="true"></div>
+    <p class="menu-title">TOASTED KOTA MENU</p>
+    <p class="tagline">We only serve quality food.</p>
+    <button class="owner-button" id="ownerButton" type="button">Owner sign in</button>
+  </header>
+
+  <main>
+    <div id="status" class="status" role="status" aria-live="polite">Loading the menu…</div>
+    <p class="offline-note hidden" id="offlineNote">You’re offline. Reconnect to load the latest menu and send an order.</p>
+    <div class="menu" id="menu" aria-label="Eat Out menu"></div>
+
+    <section class="order hidden" id="order" aria-labelledby="orderTitle">
+      <div class="order-heading">
+        <div>
+          <p class="eyebrow">YOUR ORDER</p>
+          <h2 id="orderTitle">Ready when you are</h2>
+        </div>
+        <button class="text-button" id="clearOrder" type="button">Clear</button>
+      </div>
+      <div id="orderItems"></div>
+      <div class="order-total"><span>Total</span><strong id="orderTotal">R0.00</strong></div>
+      <button class="order-button" id="shareOrder" type="button">Share your order</button>
+      <p class="order-hint">Share on WhatsApp or another app on your phone.</p>
+    </section>
+
+    <section class="owner-panel hidden" id="ownerPanel" aria-label="Owner menu controls">
+      <div class="owner-heading">
+        <div>
+          <p class="eyebrow">OWNER MODE</p>
+          <h2>Manage your menu</h2>
+        </div>
+        <button class="text-button" id="ownerLogout" type="button">Sign out</button>
+      </div>
+      <p class="owner-copy">Only your owner password can change menu items and prices.</p>
+      <button class="add-item-button" id="addItemButton" type="button">＋ Add a menu item</button>
+    </section>
+  </main>
+
+  <footer>
+    <span>MADE FRESH · MADE WITH CARE</span>
+    <button id="installButton" class="install-button hidden" type="button">Install Eat Out</button>
+  </footer>
+
+  <dialog id="ownerDialog" class="dialog">
+    <form id="ownerForm" class="dialog-card">
+      <button class="dialog-close" type="button" data-close="ownerDialog" aria-label="Close">×</button>
+      <p class="eyebrow" id="ownerFormEyebrow">OWNER ACCESS</p>
+      <h2 id="ownerFormTitle">Sign in to edit your menu</h2>
+      <p class="dialog-copy" id="ownerFormCopy">Menu prices and items can only be changed by the owner.</p>
+      <label for="ownerPassword" id="ownerPasswordLabel">Owner password</label>
+      <input id="ownerPassword" type="password" minlength="12" autocomplete="current-password" required>
+      <p class="field-hint hidden" id="setupHint">First time here? Create a strong password with at least 12 characters. Save it somewhere safe.</p>
+      <p class="form-error" id="ownerError" role="alert"></p>
+      <button class="dialog-submit" id="ownerSubmit" type="submit">Sign in</button>
+    </form>
+  </dialog>
+
+  <dialog id="itemDialog" class="dialog">
+    <form id="itemForm" class="dialog-card">
+      <button class="dialog-close" type="button" data-close="itemDialog" aria-label="Close">×</button>
+      <p class="eyebrow">OWNER MODE</p>
+      <h2 id="itemFormTitle">Add a menu item</h2>
+      <input type="hidden" id="itemId">
+      <label for="itemName">Item name</label>
+      <input id="itemName" maxlength="100" required placeholder="e.g. Cheese Kota">
+      <label for="itemDescription">What’s in it? <span class="optional">(optional)</span></label>
+      <input id="itemDescription" maxlength="500" placeholder="e.g. Bread, cheese & polony">
+      <label for="itemCategory">Menu section</label>
+      <input id="itemCategory" maxlength="60" list="categoryOptions" required value="Toasted Kota" placeholder="e.g. Combos">
+      <datalist id="categoryOptions">
+        <option value="Toasted Kota"></option>
+        <option value="Combos"></option>
+      </datalist>
+      <label for="itemPrice">Price (R)</label>
+      <input id="itemPrice" type="number" min="0" max="99999.99" step="0.01" inputmode="decimal" required placeholder="15.00">
+      <p class="form-error" id="itemError" role="alert"></p>
+      <button class="dialog-submit" type="submit">Save menu item</button>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
